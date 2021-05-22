@@ -31,6 +31,14 @@ let routes: Routes = [
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
+  {
+    path: 'client',
+    loadChildren: () => import('./client/client.module').then((m) => m.ClientModule),
+  },
+  {
+    path: 'project',
+    loadChildren: () => import('./project/project.module').then((m) => m.ProjectModule),
+  },
   { path: 'error', component: ErrorComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: '**', redirectTo: '/error' },
