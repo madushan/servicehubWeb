@@ -12,6 +12,7 @@ import { HeadroomModule } from '@ctrl/ngx-headroom';
 import { HomeComponent } from './home/home.component';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { AuthGuard } from '../shared/auth.guard';
+import { LayoutContainersModule } from '../containers/layout/layout.containers.module';
 @NgModule({
   declarations: [HomeComponent],
   imports: [
@@ -25,6 +26,7 @@ import { AuthGuard } from '../shared/auth.guard';
     BrowserAnimationsModule,
     HeadroomModule,
     ScrollToModule.forRoot(),
+    LayoutContainersModule
   ],
   providers: [AuthGuard],
 })

@@ -22,6 +22,12 @@ const data: IMenuItem[] = [
       {
         icon: 'simple-icon-briefcase',
         label: 'menu.default',
+        to: `project/projects`,
+        // roles: [UserRole.Admin],
+      },
+      {
+        icon: 'simple-icon-briefcase',
+        label: 'menu.default',
         to: `${adminRoot}/dashboards/default`,
         // roles: [UserRole.Admin],
       },

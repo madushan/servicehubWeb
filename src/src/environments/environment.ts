@@ -10,6 +10,7 @@ export const environment = {
   SCARF_ANALYTICS : false,
   adminRoot: '/app',
   apiUrl: 'https://api.coloredstrategies.com',
+  webApiUrl:'https://localhost:44326/api',
   defaultMenuType: 'menu-default',
   subHiddenBreakpoint: 1440,
   menuHiddenBreakpoint: 768,

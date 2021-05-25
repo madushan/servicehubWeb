@@ -11,6 +11,8 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { LayoutContainersModule } from './containers/layout/layout.containers.module';
 
+import { ProjectService } from './services/project.service';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -25,7 +27,9 @@ import { LayoutContainersModule } from './containers/layout/layout.containers.mo
   declarations: [
     AppComponent
   ],
-  providers: [],
+  providers: [
+    ProjectService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
