@@ -4,7 +4,6 @@ import { ApplicationsComponent } from './applications.component';
 import { TodoComponent } from './todo/todo.component';
 import { SurveyComponent } from './survey/survey.component';
 import { SurveyDetailComponent } from './survey-detail/survey-detail.component';
-import { ChatComponent } from './chat/chat.component';
 import { ApplicationsRoutingModule } from './applications.routing';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +19,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
-  declarations: [ApplicationsComponent, TodoComponent, SurveyComponent, SurveyDetailComponent, ChatComponent],
+  declarations: [
+    ApplicationsComponent,
+    TodoComponent,
+    SurveyComponent,
+    SurveyDetailComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -35,7 +39,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     TabsModule.forRoot(),
     ProgressbarModule.forRoot(),
     ModalModule.forRoot(),
-    BsDropdownModule.forRoot()
-  ]
+    BsDropdownModule.forRoot(),
+  ],
 })
-export class ApplicationsModule { }
+export class ApplicationsModule {}

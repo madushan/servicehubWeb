@@ -13,8 +13,10 @@ import { HomeComponent } from './home/home.component';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { AuthGuard } from '../shared/auth.guard';
 import { LayoutContainersModule } from '../containers/layout/layout.containers.module';
+import { ChatService } from './app/applications/chat/chat.service';
+import { ChatComponent } from './app/applications/chat/chat.component';
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, ChatComponent],
   imports: [
     CommonModule,
     ViewRoutingModule,
@@ -26,8 +28,8 @@ import { LayoutContainersModule } from '../containers/layout/layout.containers.m
     BrowserAnimationsModule,
     HeadroomModule,
     ScrollToModule.forRoot(),
-    LayoutContainersModule
+    LayoutContainersModule,
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, ChatService],
 })
 export class ViewsModule {}
