@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule as FormsModuleAngular, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule as FormsModuleAngular,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ArchwizardModule } from 'angular-archwizard';
 
@@ -23,11 +26,13 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { ProjectComponent } from './project.component';
+import { ProjectDetailsComponent } from './details/project-details.component';
 
 @NgModule({
   declarations: [
     ProjectComponent,
-    ProjectCreateComponent
+    ProjectCreateComponent,
+    ProjectDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -53,7 +58,7 @@ import { ProjectComponent } from './project.component';
     AccordionModule.forRoot(),
     ContextMenuModule.forRoot({
       useBootstrap4: true,
-    })
-  ]
+    }),
+  ],
 })
-export class ProjectModule { }
+export class ProjectModule {}

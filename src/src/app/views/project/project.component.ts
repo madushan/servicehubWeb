@@ -5,16 +5,16 @@ import { ApiService } from 'src/app/data/api.service';
 // import { IProduct } from 'src/app/data/api.service';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { ProjectCreateComponent } from './create/project-create.component';
+import { ProjectDetailsComponent } from './details/project-details.component';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project';
 import { map } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 
-
 @Component({
   selector: 'app-project',
-  templateUrl: './project.component.html'
+  templateUrl: './project.component.html',
 })
 export class ProjectComponent implements OnInit {
   displayMode = 'list';
@@ -29,10 +29,13 @@ export class ProjectComponent implements OnInit {
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
-  
+
   bsModalRef: BsModalRef;
 
   config = {
+    initialState: {
+      project: null,
+    },
     backdrop: true,
     ignoreBackdropClick: true,
     class: 'modal-lg',
@@ -40,88 +43,153 @@ export class ProjectComponent implements OnInit {
   };
 
   @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
-  @ViewChild('addNewModalRef', { static: true }) addNewModalRef: ProjectCreateComponent;//AddNewProductModalComponent;
+  //@ViewChild('addNewModalRef', { static: true })  addNewModalRef: ProjectCreateComponent; //AddNewProductModalComponent;
 
-  constructor(private hotkeysService: HotkeysService, 
+  constructor(
+    private hotkeysService: HotkeysService,
     //private apiService: ApiService,
-    private projectService:ProjectService,
-    private modalService:BsModalService) {
-    this.hotkeysService.add(new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
-      this.selected = [...this.data];
-      return false;
-    }));
-    this.hotkeysService.add(new Hotkey('ctrl+d', (event: KeyboardEvent): boolean => {
-      this.selected = [];
-      return false;
-    }));
-  }
-
-  openModalWithComponent(){
-    this.bsModalRef = this.modalService.show(ProjectCreateComponent,this.config);
-      this.bsModalRef.content.project = new Project();
-      this.bsModalRef.content.event.subscribe(res => {
-          console.log(res);
+    private projectService: ProjectService,
+    private modalService: BsModalService
+  ) {
+    this.hotkeysService.add(
+      new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
+        this.selected = [...this.data];
+        return false;
       })
+    );
+    this.hotkeysService.add(
+      new Hotkey('ctrl+d', (event: KeyboardEvent): boolean => {
+        this.selected = [];
+        return false;
+      })
+    );
   }
-
 
   ngOnInit(): void {
-    this.loadData(this.itemsPerPage, this.currentPage, this.search, this.orderBy);
+    this.loadData(
+      this.itemsPerPage,
+      this.currentPage,
+      this.search,
+      this.orderBy
+    );
   }
 
-  loadData(pageSize: number = 10, currentPage: number = 1, search: string = '', orderBy: string = ''): void {
+  loadData(
+    pageSize: number = 10,
+    currentPage: number = 1,
+    search: string = '',
+    orderBy: string = ''
+  ): void {
     this.itemsPerPage = pageSize;
     this.currentPage = currentPage;
     this.search = search;
     this.orderBy = orderBy;
 
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
-      this.projectService.getProjects(pageSize, currentPage, search, orderBy).subscribe(
-      result => {
-        console.log(result);
-        if (result.state) {
+    this.projectService
+      .getPageResult(pageSize, currentPage, search, orderBy)
+      .subscribe(
+        (result) => {
+          console.log(result);
+          if (result.state) {
+            this.isLoading = false;
+            this.data = result.data;
+            // .pipe(
+            // map(x => {
+            //   console.log(x);
+            //   return {
+            //     x
+            //     //img: x.img.replace('/img/', '/img/products/')
+            //   };
+            // }
+            // ));
+            this.totalItem = result.totalItem;
+            this.totalPage = result.totalPage;
+            this.setSelectAllState();
+          } else {
+            this.endOfTheList = true;
+          }
+          console.log(this.data);
+        },
+        (error) => {
           this.isLoading = false;
-          this.data = result.data;
-          // .pipe(
-          // map(x => {
-          //   console.log(x);
-          //   return {
-          //     x
-          //     //img: x.img.replace('/img/', '/img/products/')
-          //   };
-          // }
-          // ));
-          this.totalItem = result.totalItem;
-          this.totalPage = result.totalPage;
-          this.setSelectAllState();
-        } else {
-          this.endOfTheList = true;
         }
-        console.log(this.data);
-      },
-      error => {
-        this.isLoading = false;
-      }
-    );
+      );
     // this.projectService.getProjects().subscribe(pagingData => {
 
     // })
+  }
+
+  addEntity() {
+    this.config.initialState.project = null;
+    this.bsModalRef = this.modalService.show(
+      ProjectCreateComponent,
+      this.config
+    );
+    //this.bsModalRef.content.project = new Project();
+    this.bsModalRef.content.modalRef = this.bsModalRef;
+    this.bsModalRef.content.event.subscribe((res) => {
+      //console.log(res);
+      this.projectService.add(res.data).subscribe((d) => {
+        console.log(d);
+        //this.data.push(res.data)
+      });
+    });
+  }
+
+  viewEntity(project: Project) {
+    console.log(project);
+    this.config.initialState.project = project;
+    this.config.class = 'modal-md';
+    this.bsModalRef = this.modalService.show(
+      ProjectDetailsComponent,
+      this.config
+    );
+    //this.bsModalRef.content.project = new Project();
+    this.bsModalRef.content.modalRef = this.bsModalRef;
+    // this.bsModalRef.content.event.subscribe((res) => {
+    //   console.log(res);
+    //   //   this.projectService.add(res.data).subscribe((d) => {
+    //   //     console.log(d);
+    //   //     //this.data.push(res.data)
+    //   //   });
+    // });
+  }
+  editEntity(project: Project) {
+    this.config.initialState.project = project;
+    this.bsModalRef = this.modalService.show(
+      ProjectCreateComponent,
+      this.config
+    );
+    //this.bsModalRef.content.project = project; //new Project();
+    this.bsModalRef.content.modalRef = this.bsModalRef;
+    this.bsModalRef.content.event.subscribe((res) => {
+      console.log(res);
+      this.projectService.update(res.data).subscribe(() => {
+        //this.data.(res.data);
+      });
+    });
+  }
+  deleteEntity(project: Project) {
+    this.projectService
+      .delete(+project.id)
+      .subscribe(() => this.data.filter((x) => x.id == project.id));
   }
 
   changeDisplayMode(mode): void {
     this.displayMode = mode;
   }
 
-//   showAddNewModal(): void {
-//     this.bsModalRef =  this.addNewModalRef.show();
-//   }
+  //   showAddNewModal(): void {
+  //     this.bsModalRef =  this.addNewModalRef.show();
+  //   }
 
   isSelected(p: Project): boolean {
-    return this.selected.findIndex(x => x.id === p.id) > -1;
+    return this.selected.findIndex((x) => x.id === p.id) > -1;
   }
   onSelect(item: Project): void {
     if (this.isSelected(item)) {
-      this.selected = this.selected.filter(x => x.id !== item.id);
+      this.selected = this.selected.filter((x) => x.id !== item.id);
     } else {
       this.selected.push(item);
     }
@@ -165,6 +233,11 @@ export class ProjectComponent implements OnInit {
   }
 
   onContextMenuClick(action: string, item: Project): void {
-    console.log('onContextMenuClick -> action :  ', action, ', item.title :', item.title);
+    console.log(
+      'onContextMenuClick -> action :  ',
+      action,
+      ', item.title :',
+      item.title
+    );
   }
 }

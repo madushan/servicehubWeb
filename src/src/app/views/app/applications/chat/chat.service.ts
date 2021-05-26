@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { IServiceResponse } from 'src/app/data/service-response';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 export interface IChatContact {
   id: number;
@@ -67,6 +67,7 @@ export class ChatService {
   getConversations(userId: number): Observable<IChatConversation[]> {
     const url = `${environment.apiUrl}/conversations`;
     return this.http.get(url).pipe(
+      tap(console.log),
       map((res: IServiceResponse<IChatConversation>) => {
         // console.log("response[chat.service][getConversations]", res);
         return res.data;

@@ -1,28 +1,27 @@
 <div id="app-container" [className]="sidebar.containerClassnames">
+  <app-topnav></app-topnav>
+  <app-sidebar></app-sidebar>
+  <main>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+  <app-footer></app-footer>
+</div>
+<!-- <div id="app-container" [className]="sidebar.containerClassnames">
     <app-topnav></app-topnav>
     <app-sidebar></app-sidebar>
     <main>
-      <div class="container-fluid">
-        <router-outlet></router-outlet>
-      </div>
-    </main>
-    <app-footer></app-footer>
-  </div>
-  <div id="app-container" [className]="sidebar.containerClassnames">
-    <app-topnav></app-topnav>
-    <app-sidebar></app-sidebar>
-    <main>
-      <div class="container-fluid">
-          <!-- /app/pages/* custom container -->
-            <!-- <div class="row">
+      <div class="container-fluid"> -->
+<!-- /app/pages/* custom container -->
+<!-- <div class="row">
                 <div class="col-12"> -->
-                    <!-- <router-outlet></router-outlet> -->
-                <!-- </div>
+<!-- <router-outlet></router-outlet> -->
+<!-- </div>
             </div> -->
-          <!-- <h2>Home</h2>
+<!-- <h2>Home</h2>
         <router-outlet></router-outlet> -->
-      </div>
+<!-- </div>
     </main>
     <app-footer></app-footer>
-  </div>
-    
+  </div> -->

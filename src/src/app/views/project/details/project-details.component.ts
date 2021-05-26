@@ -2,14 +2,15 @@ import { EventEmitter, Input, OnInit } from '@angular/core';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { Project } from 'src/app/models/project';
+import { Project } from './../../../models/project';
 
 @Component({
-  selector: 'app-project-create',
-  templateUrl: './project-create.component.html',
+  selector: 'app-project-details',
+  templateUrl: './project-details.component.html',
 })
-export class ProjectCreateComponent implements OnInit {
+export class ProjectDetailsComponent implements OnInit {
   projectForm: FormGroup;
+  rate = 4;
 
   //public project: Project;
   @Input() public project: Project;
@@ -39,12 +40,12 @@ export class ProjectCreateComponent implements OnInit {
   constructor(private modalService: BsModalService, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.projectForm = this.createFormGroupWithFB();
-    console.log('on init');
-    if (this.project) {
-      console.log(this.project);
-      this.projectForm.patchValue(this.project);
-    }
+    // this.projectForm = this.createFormGroupWithFB();
+    console.log(this.project);
+    // if (this.project) {
+    //   console.log(this.project);
+    //   this.projectForm.patchValue(this.project);
+    // }
   }
 
   //   createFormGroup() {
@@ -55,26 +56,26 @@ export class ProjectCreateComponent implements OnInit {
   //     });
   //   }
 
-  createFormGroupWithFB() {
-    return (this.projectForm = this.fb.group({
-      id: '0',
-      title: '',
-      category: '',
-      description: '',
-    }));
-  }
+  //   createFormGroupWithFB() {
+  //     return (this.projectForm = this.fb.group({
+  //       id: '0',
+  //       title: '',
+  //       category: '',
+  //       description: '',
+  //     }));
+  //   }
 
-  saveToList(form) {
-    console.log(form);
-    if (form.value) {
-      this.triggerEvent(form.value);
-      this.modalRef.hide();
-    }
-  }
+  //   saveToList(form) {
+  //     console.log(form);
+  //     if (form.value) {
+  //       this.triggerEvent(form.value);
+  //       this.modalRef.hide();
+  //     }
+  //   }
 
-  triggerEvent(item: any) {
-    this.event.emit({ data: item, res: 200 });
-  }
+  //   triggerEvent(item: any) {
+  //     this.event.emit({ data: item, res: 200 });
+  //   }
 
   //   show() {
   //     this.modalRef = this.modalService.show(this.template, this.config);
