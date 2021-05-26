@@ -10,6 +10,7 @@ import { ChatService, IChatContact, IChatConversation } from './chat.service';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-chat',
@@ -29,6 +30,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   searchTerms = new Subject<string>();
   searchKeyword = '';
   message = '';
+
+  modalRef: BsModalRef;
 
   constructor(
     private chatService: ChatService,

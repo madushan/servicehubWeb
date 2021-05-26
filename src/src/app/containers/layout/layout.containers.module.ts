@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -23,12 +24,13 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     ColorSwitcherComponent,
     FooterComponent,
     HeadingComponent,
-    ApplicationMenuComponent
+    ApplicationMenuComponent,
   ],
   imports: [
     CommonModule,
     PerfectScrollbarModule,
     TranslateModule,
+    ModalModule.forRoot(),
     RouterModule,
     CollapseModule,
     FormsModule,
@@ -42,7 +44,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     ColorSwitcherComponent,
     FooterComponent,
     HeadingComponent,
-    ApplicationMenuComponent
-  ]
+    ApplicationMenuComponent,
+  ],
+  providers: [],
 })
-export class LayoutContainersModule { }
+export class LayoutContainersModule {}

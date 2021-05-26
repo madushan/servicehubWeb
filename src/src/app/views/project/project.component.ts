@@ -155,6 +155,7 @@ export class ProjectComponent implements OnInit {
     //   //   });
     // });
   }
+
   editEntity(project: Project) {
     this.config.initialState.project = project;
     this.bsModalRef = this.modalService.show(

@@ -6,6 +6,8 @@ import { LangService, Language } from 'src/app/shared/lang.service';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 import { getThemeColor, setThemeColor } from 'src/app/utils/util';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ChatComponent } from 'src/app/views/app/applications/chat/chat.component';
 
 @Component({
   selector: 'app-topnav',
@@ -24,16 +26,42 @@ export class TopnavComponent implements OnInit, OnDestroy {
   isDarkModeActive = false;
   searchKey = '';
 
+  bsModalRef: BsModalRef;
+  config = {
+    initialState: {
+      project: null,
+    },
+    backdrop: true,
+    ignoreBackdropClick: false,
+    class: 'modal-right modal-xl',
+    //class: 'modal-right'
+  };
+
   constructor(
     private sidebarService: SidebarService,
     private authService: AuthService,
     private router: Router,
-    private langService: LangService
+    private langService: LangService,
+    private modalService: BsModalService
   ) {
     this.languages = this.langService.supportedLanguages;
     this.currentLanguage = this.langService.languageShorthand;
     this.isSingleLang = this.langService.isSingleLang;
     this.isDarkModeActive = getThemeColor().indexOf('dark') > -1 ? true : false;
+  }
+
+  showChatWindow() {
+    console.log('chat window open');
+    this.bsModalRef = this.modalService.show(ChatComponent, this.config);
+    //this.bsModalRef.content.project = new Project();
+    this.bsModalRef.content.modalRef = this.bsModalRef;
+    // this.bsModalRef.content.event.subscribe((res) => {
+    //   console.log(res);
+    //   //   this.projectService.add(res.data).subscribe((d) => {
+    //   //     console.log(d);
+    //   //     //this.data.push(res.data)
+    //   //   });
+    // });
   }
 
   onDarkModeChange(event): void {
@@ -111,7 +139,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
       containerClassnames,
       this.sidebar.selectedMenuHasSubItems
     );
-  }
+  };
 
   mobileMenuButtonClick = (
     event: { stopPropagation: () => void },
@@ -121,7 +149,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
       event.stopPropagation();
     }
     this.sidebarService.clickOnMobileMenu(containerClassnames);
-  }
+  };
 
   onSignOut(): void {
     this.authService.signOut().subscribe(() => {
