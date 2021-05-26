@@ -2,10 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AddNewProductModalComponent } from 'src/app/containers/pages/add-new-product-modal/add-new-product-modal.component';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { ApiService } from 'src/app/data/api.service';
-import { IProduct } from 'src/app/data/api.service';
+// import { IProduct } from 'src/app/data/api.service';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { ProjectCreateComponent } from './create/project-create.component';
 import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project';
+import { map } from 'rxjs/operators';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 
 
@@ -14,10 +17,10 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './project.component.html'
 })
 export class ProjectComponent implements OnInit {
-  displayMode = 'thumb';
+  displayMode = 'list';
   selectAllState = '';
-  selected: IProduct[] = [];
-  data: IProduct[] = [];
+  selected: Project[] = [];
+  data: Project[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
@@ -26,12 +29,23 @@ export class ProjectComponent implements OnInit {
   endOfTheList = false;
   totalItem = 0;
   totalPage = 0;
+  
+  bsModalRef: BsModalRef;
 
+  config = {
+    backdrop: true,
+    ignoreBackdropClick: true,
+    class: 'modal-lg',
+    //class: 'modal-right'
+  };
 
   @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
   @ViewChild('addNewModalRef', { static: true }) addNewModalRef: ProjectCreateComponent;//AddNewProductModalComponent;
 
-  constructor(private hotkeysService: HotkeysService, private apiService: ApiService,private projectService:ProjectService) {
+  constructor(private hotkeysService: HotkeysService, 
+    //private apiService: ApiService,
+    private projectService:ProjectService,
+    private modalService:BsModalService) {
     this.hotkeysService.add(new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
       this.selected = [...this.data];
       return false;
@@ -40,6 +54,14 @@ export class ProjectComponent implements OnInit {
       this.selected = [];
       return false;
     }));
+  }
+
+  openModalWithComponent(){
+    this.bsModalRef = this.modalService.show(ProjectCreateComponent,this.config);
+      this.bsModalRef.content.project = new Project();
+      this.bsModalRef.content.event.subscribe(res => {
+          console.log(res);
+      })
   }
 
 
@@ -55,21 +77,27 @@ export class ProjectComponent implements OnInit {
 
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
       this.projectService.getProjects(pageSize, currentPage, search, orderBy).subscribe(
-      data => {
-        if (data.status) {
+      result => {
+        console.log(result);
+        if (result.state) {
           this.isLoading = false;
-          this.data = data.data.map(x => {
-            return {
-              ...x,
-              img: x.img.replace('/img/', '/img/products/')
-            };
-          });
-          this.totalItem = data.totalItem;
-          this.totalPage = data.totalPage;
+          this.data = result.data;
+          // .pipe(
+          // map(x => {
+          //   console.log(x);
+          //   return {
+          //     x
+          //     //img: x.img.replace('/img/', '/img/products/')
+          //   };
+          // }
+          // ));
+          this.totalItem = result.totalItem;
+          this.totalPage = result.totalPage;
           this.setSelectAllState();
         } else {
           this.endOfTheList = true;
         }
+        console.log(this.data);
       },
       error => {
         this.isLoading = false;
@@ -84,14 +112,14 @@ export class ProjectComponent implements OnInit {
     this.displayMode = mode;
   }
 
-  showAddNewModal(): void {
-    this.addNewModalRef.show();
-  }
+//   showAddNewModal(): void {
+//     this.bsModalRef =  this.addNewModalRef.show();
+//   }
 
-  isSelected(p: IProduct): boolean {
+  isSelected(p: Project): boolean {
     return this.selected.findIndex(x => x.id === p.id) > -1;
   }
-  onSelect(item: IProduct): void {
+  onSelect(item: Project): void {
     if (this.isSelected(item)) {
       this.selected = this.selected.filter(x => x.id !== item.id);
     } else {
@@ -136,7 +164,7 @@ export class ProjectComponent implements OnInit {
     this.loadData(this.itemsPerPage, 1, val, this.orderBy);
   }
 
-  onContextMenuClick(action: string, item: IProduct): void {
+  onContextMenuClick(action: string, item: Project): void {
     console.log('onContextMenuClick -> action :  ', action, ', item.title :', item.title);
   }
 }

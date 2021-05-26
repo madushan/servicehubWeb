@@ -1,14 +1,14 @@
 <app-list-page-header [displayMode]="displayMode" [itemOptionsPerPage]="[5,10,20]" [itemsPerPage]="itemsPerPage" 
 [selectAllState]="selectAllState"
   (changeDisplayMode)="changeDisplayMode($event)"
-  (addNewItem)="showAddNewModal()"
   (selectAllChange)="selectAllChange($event)"
   (itemsPerPageChange)="itemsPerPageChange($event)"
   (changeOrderBy)="changeOrderBy($event)"
   (searchKeyUp)="searchKeyUp($event)"
   >
 </app-list-page-header>
-<app-project-create #addNewModalRef></app-project-create>
+<!-- <app-project-create #addNewModalRef></app-project-create> -->
+<button type="button" class="btn btn-primary" (click)="openModalWithComponent()">Add New Item</button>
 
 <context-menu #basicMenu>
   <ng-template contextMenuItem let-item (execute)="onContextMenuClick('copy',$event.item)">
@@ -33,9 +33,9 @@
             {{p.title}}
           </a>
           <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.category}}</p>
-          <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.date}}</p>
+          <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.description}}</p>
           <div class="w-15 w-xs-100">
-            <span [class]="'badge badge-pill badge-'+ p.statusColor">{{p.status}}</span>
+            <span [class]="'badge badge-pill badge-primary'">primary</span>
           </div>
         </div>
         <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
@@ -47,6 +47,30 @@
     </div>
   </div>
 
+  <!-- <div class="col-12 list" *ngIf="displayMode==='list'">
+    <div [ngClass]="{'card d-flex flex-row mb-3': true, 'active':isSelected(p)}" *ngFor="let p of data; let i=index"
+    [contextMenu]="basicMenu" [contextMenuSubject]="p">
+      <div class="d-flex flex-grow-1 min-width-zero">
+        <div
+          class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+          <a class="list-item-heading mb-0 truncate w-40 w-xs-100" href="javascript:;">
+            {{p.title}}
+          </a>
+          <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.category}}</p>
+          <p class="mb-0 text-muted text-small w-15 w-xs-100">{{p.description}}</p>
+          <div class="w-15 w-xs-100">
+            <span [class]="'badge badge-pill badge-'+ p.statusColor">{{p.status}}</span>
+          </div>
+        </div>
+        <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
+          <input type="checkbox" class="custom-control-input" [id]="'customCheck'+i" [checked]="isSelected(p)"
+            (change)="onSelect(p)">
+          <label class="custom-control-label" [for]="'customCheck'+i"></label>
+        </label>
+      </div>
+    </div>
+  </div> -->
+<!-- 
   <div class="col-12 list" *ngIf="displayMode==='thumb'">
     <div [ngClass]="{'card d-flex flex-row mb-3': true, 'active':isSelected(p)}" *ngFor="let p of data; let i=index"
     [contextMenu]="basicMenu" [contextMenuSubject]="p">
@@ -107,7 +131,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="col-12">
     <pagination [totalItems]="totalItem" [itemsPerPage]="itemsPerPage" [rotate]="true" [maxSize]="5"
