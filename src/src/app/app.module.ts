@@ -12,6 +12,10 @@ import { environment } from 'src/environments/environment';
 import { LayoutContainersModule } from './containers/layout/layout.containers.module';
 
 import { ProjectService } from './services/project.service';
+import { AdvertisementService } from './services/advertisement.service';
+import { AgreementService } from './services/agreement.service';
+import { ClientService } from './services/client.service';
+import { PaymentService } from './services/payment.service';
 
 @NgModule({
   imports: [
@@ -22,14 +26,16 @@ import { ProjectService } from './services/project.service';
     BrowserAnimationsModule,
     TranslateModule.forRoot(),
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
   ],
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   providers: [
-    ProjectService
+    ProjectService,
+    AdvertisementService,
+    AgreementService,
+    ClientService,
+    PaymentService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -48,6 +48,11 @@ export class ProjectDetailsComponent implements OnInit {
     // }
   }
 
+  edit() {
+    this.event.emit(this.project);
+    this.modalRef.hide();
+  }
+
   //   createFormGroup() {
   //     return new FormGroup({
   //       title: new FormControl(),

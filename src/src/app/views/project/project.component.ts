@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AddNewProductModalComponent } from 'src/app/containers/pages/add-new-product-modal/add-new-product-modal.component';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { ApiService } from 'src/app/data/api.service';
@@ -10,13 +10,16 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project';
 import { map } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { TranslateService } from '@ngx-translate/core';
+import { ModalConfirmComponent } from './../components/modal-confirm/modal-confirm.component';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, AfterViewInit {
   displayMode = 'list';
   selectAllState = '';
   selected: Project[] = [];
@@ -42,11 +45,23 @@ export class ProjectComponent implements OnInit {
     //class: 'modal-right'
   };
 
+  configDelete = {
+    initialState: {
+      title: '',
+    },
+    backdrop: true,
+    ignoreBackdropClick: true,
+    class: 'modal-md',
+    //class: 'modal-right'
+  };
+
   @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
   //@ViewChild('addNewModalRef', { static: true })  addNewModalRef: ProjectCreateComponent; //AddNewProductModalComponent;
 
   constructor(
     private hotkeysService: HotkeysService,
+    private notifications: NotificationsService,
+    private translate: TranslateService,
     //private apiService: ApiService,
     private projectService: ProjectService,
     private modalService: BsModalService
@@ -71,6 +86,20 @@ export class ProjectComponent implements OnInit {
       this.currentPage,
       this.search,
       this.orderBy
+    );
+  }
+
+  ngAfterViewInit(): void {
+    console.log('ngAfterViewInit');
+    this.notifications.success(
+      this.translate.instant('alert.success-alert'),
+      this.translate.instant('alert.success-alert-text'),
+      {
+        timeOut: 10000,
+        showProgressBar: true,
+        pauseOnHover: false,
+        clickToClose: false,
+      }
     );
   }
 
@@ -132,7 +161,21 @@ export class ProjectComponent implements OnInit {
       //console.log(res);
       this.projectService.add(res.data).subscribe((d) => {
         console.log(d);
+
         //this.data.push(res.data)
+        this.notifications.success(
+          'Success',
+          'Project created successfully',
+          // this.translate.instant('alert.success-alert'),
+          // this.translate.instant('alert.success-alert-text'),
+
+          {
+            timeOut: 10000,
+            showProgressBar: true,
+            pauseOnHover: false,
+            clickToClose: true,
+          }
+        );
       });
     });
   }
@@ -147,13 +190,11 @@ export class ProjectComponent implements OnInit {
     );
     //this.bsModalRef.content.project = new Project();
     this.bsModalRef.content.modalRef = this.bsModalRef;
-    // this.bsModalRef.content.event.subscribe((res) => {
-    //   console.log(res);
-    //   //   this.projectService.add(res.data).subscribe((d) => {
-    //   //     console.log(d);
-    //   //     //this.data.push(res.data)
-    //   //   });
-    // });
+
+    this.bsModalRef.content.event.subscribe((res) => {
+      console.log(res);
+      this.editEntity(res);
+    });
   }
 
   editEntity(project: Project) {
@@ -172,9 +213,21 @@ export class ProjectComponent implements OnInit {
     });
   }
   deleteEntity(project: Project) {
-    this.projectService
-      .delete(+project.id)
-      .subscribe(() => this.data.filter((x) => x.id == project.id));
+    this.configDelete.initialState.title =
+      'Are you want to delete ' + project.title + '?';
+    this.bsModalRef = this.modalService.show(
+      ModalConfirmComponent,
+      this.configDelete
+    );
+    //this.bsModalRef.content.project = new Project();
+    this.bsModalRef.content.modalRef = this.bsModalRef;
+    this.bsModalRef.content.event.subscribe((res) => {
+      if (res.isConfirmed == true) {
+        this.projectService
+          .delete(+project.id)
+          .subscribe(() => this.data.filter((x) => x.id == project.id));
+      }
+    });
   }
 
   changeDisplayMode(mode): void {

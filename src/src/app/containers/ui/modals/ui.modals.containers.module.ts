@@ -5,7 +5,7 @@ import { ModalComponentComponent } from './modal-component/modal-component.compo
 import { ModalNestedComponent } from './modal-nested/modal-nested.component';
 import { ModalLongContentComponent } from './modal-long-content/modal-long-content.component';
 import { ModalEventsComponent } from './modal-events/modal-events.component';
-import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+// import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 import { ModalCustomCssComponent } from './modal-custom-css/modal-custom-css.component';
 import { ModalAnimationComponent } from './modal-animation/modal-animation.component';
 import { ModalEscComponent } from './modal-esc/modal-esc.component';
@@ -27,7 +27,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     ModalNestedComponent,
     ModalLongContentComponent,
     ModalEventsComponent,
-    ModalConfirmComponent,
+    //ModalConfirmComponent,
     ModalCustomCssComponent,
     ModalAnimationComponent,
     ModalEscComponent,
@@ -53,7 +53,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     ModalNestedComponent,
     ModalLongContentComponent,
     ModalEventsComponent,
-    ModalConfirmComponent,
+    //ModalConfirmComponent,
     ModalCustomCssComponent,
     ModalAnimationComponent,
     ModalEscComponent,

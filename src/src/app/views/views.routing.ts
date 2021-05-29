@@ -11,11 +11,13 @@ const adminRoot = environment.adminRoot.substr(1); // path cannot start with a s
 
 let routes: Routes = [
   {
-    path:'',
-    component:HomeComponent,
-  children:[
+    path: '',
+    component: HomeComponent,
+    children: [
       {
-        path: '', redirectTo: 'project', pathMatch: 'full'
+        path: '',
+        redirectTo: 'project',
+        pathMatch: 'full',
         // component: HomeComponent,
         // pathMatch: 'full',
       },
@@ -33,21 +35,41 @@ let routes: Routes = [
       },
       {
         path: 'user',
-        loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
+        loadChildren: () =>
+          import('./user/user.module').then((m) => m.UserModule),
       },
       {
         path: 'client',
-        loadChildren: () => import('./client/client.module').then((m) => m.ClientModule),
+        loadChildren: () =>
+          import('./client/client.module').then((m) => m.ClientModule),
+      },
+      {
+        path: 'advertisement',
+        loadChildren: () =>
+          import('./advertisement/advertisement.module').then(
+            (m) => m.AdvertisementModule
+          ),
+      },
+      {
+        path: 'agreement',
+        loadChildren: () =>
+          import('./agreement/agreement.module').then((m) => m.AgreementModule),
+      },
+      {
+        path: 'payment',
+        loadChildren: () =>
+          import('./payment/payment.module').then((m) => m.PaymentModule),
       },
       {
         path: 'project',
-        loadChildren: () => import('./project/project.module').then((m) => m.ProjectModule),
+        loadChildren: () =>
+          import('./project/project.module').then((m) => m.ProjectModule),
       },
       { path: 'error', component: ErrorComponent },
       { path: 'unauthorized', component: UnauthorizedComponent },
       { path: '**', redirectTo: '/error' },
-    ]
-  }
+    ],
+  },
 ];
 
 // if (!environment.isAuthGuardActive) {

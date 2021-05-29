@@ -28,6 +28,19 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { ProjectComponent } from './project.component';
 import { ProjectDetailsComponent } from './details/project-details.component';
 
+import { FormsModule } from '@angular/forms';
+import { QuillModule } from 'ngx-quill';
+import { AgmCoreModule } from '@agm/core';
+import { YaCoreModule } from 'yamapng';
+import { YamapngModule } from 'yamapng';
+import { SortablejsModule } from 'ngx-sortablejs';
+import { BootstrapModule } from 'src/app/components/bootstrap/bootstrap.module';
+import { UiCardsContainersModule } from 'src/app/containers/ui/cards/ui.cards.containers.module';
+import { UiModalsContainersModule } from 'src/app/containers/ui/modals/ui.modals.containers.module';
+import { ComponentsRoutingModule } from '../app/ui/components/components.routing';
+import { ViewsModule } from '../views.module';
+import { CommonComponentModule } from './../components/common-components.module';
+
 @NgModule({
   declarations: [
     ProjectComponent,
@@ -59,6 +72,19 @@ import { ProjectDetailsComponent } from './details/project-details.component';
     ContextMenuModule.forRoot({
       useBootstrap4: true,
     }),
+
+    ComponentsRoutingModule,
+    FormsModule,
+    UiModalsContainersModule,
+    QuillModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCO8MfadmlotuuHC8wmjwL_46I5QAMIiRU',
+    }),
+    YamapngModule,
+    YaCoreModule.forRoot({ apiKey: '658f67a2-fd77-42e9-b99e-2bd48c4ccad4' }),
+    SortablejsModule,
+    BootstrapModule,
+    //CommonComponentModule,
   ],
 })
 export class ProjectModule {}

@@ -6,17 +6,15 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-datepicker',
-  templateUrl: './datepicker.component.html'
+  templateUrl: './datepicker.component.html',
 })
 export class DatepickerComponent implements OnInit {
-
   form: FormGroup;
   bsValue = new Date();
   bsRangeValue: Date[];
   maxDate = new Date();
 
   bsInlineValue = new Date();
-
 
   constructor(private localeService: BsLocaleService) {
     this.maxDate.setDate(this.maxDate.getDate() + 7);
@@ -31,5 +29,4 @@ export class DatepickerComponent implements OnInit {
       basicDate: new FormControl(new Date()),
     });
   }
-
 }

@@ -15,6 +15,7 @@ import { AuthGuard } from '../shared/auth.guard';
 import { LayoutContainersModule } from '../containers/layout/layout.containers.module';
 import { ChatService } from './app/applications/chat/chat.service';
 import { ChatComponent } from './app/applications/chat/chat.component';
+// import { ModalConfirmComponent } from '../containers/ui/modals/modal-confirm/modal-confirm.component';
 @NgModule({
   declarations: [HomeComponent, ChatComponent],
   imports: [

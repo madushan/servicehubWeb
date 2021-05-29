@@ -1,0 +1,28 @@
+<!-- <button type="button" class="btn btn-primary" (click)="openModal(template)">{{'modal.open-modal' | translate}}</button>
+<br> -->
+<div class="modal-body">
+  <!-- <div class="card">
+    <div class="card-body"> -->
+  <!-- <div *ngIf="title">
+    <br />
+    <h1 class="border p-2 rounded">Delete</h1>
+  </div> -->
+  <h2 class="border p-2 rounded">Delete</h2>
+  <!-- <ng-template #template> -->
+  <div class="modal-body text-center">
+    <h3 class="modal-title mb-4">
+      {{ title }}
+      <!-- {{ "modal.confirm-message" | translate }} -->
+    </h3>
+    <button type="button" class="btn btn-lg btn-danger" (click)="confirm()">
+      {{ "modal.yes" | translate }}
+    </button>
+    {{ " " }}
+    <button type="button" class="btn btn-lg btn-primary" (click)="decline()">
+      {{ "modal.no" | translate }}
+    </button>
+  </div>
+  <!-- </ng-template> -->
+  <!-- </div>
+  </div> -->
+</div>
