@@ -2,11 +2,25 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', loadChildren: () => import('./views/views.module').then(m => m.ViewsModule) },
+  //   {
+  //     path: 'views',
+  //     loadChildren: () =>
+  //       import('./views/views.module').then((m) => m.ViewsModule),
+  //   },
+  //   {
+  //     path: 'main',
+  //     loadChildren: () =>
+  //       import('./views/frontend/frontend.module').then((m) => m.FrontendModule),
+  //   },
+  //   {
+  //     path: '',
+  //     redirectTo: 'main',
+  //     pathMatch: 'full',
+  //   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

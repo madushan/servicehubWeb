@@ -19,7 +19,7 @@ import { ModalConfirmComponent } from '../components/modal-confirm/modal-confirm
   selector: 'app-client',
   templateUrl: './client.component.html',
 })
-export class ClientComponent implements OnInit, OnDestroy {
+export class ClientComponent implements OnInit {
   //constructor(private renderer: Renderer2) {}
 
   displayMode = 'list';
@@ -77,9 +77,9 @@ export class ClientComponent implements OnInit, OnDestroy {
       })
     );
   }
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+  //   ngOnDestroy(): void {
+  //     throw new Error('Method not implemented.');
+  //   }
 
   ngOnInit(): void {
     this.loadData(

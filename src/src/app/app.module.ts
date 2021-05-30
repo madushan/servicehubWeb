@@ -16,11 +16,13 @@ import { AdvertisementService } from './services/advertisement.service';
 import { AgreementService } from './services/agreement.service';
 import { ClientService } from './services/client.service';
 import { PaymentService } from './services/payment.service';
+import { FrontendModule } from './views/frontend/frontend.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     ViewsModule,
+    FrontendModule,
     AppRoutingModule,
     LayoutContainersModule,
     BrowserAnimationsModule,

@@ -117,7 +117,12 @@
     "wizard": "Wizard",
     "form-layouts": "Form Layouts",
     "form-validations": "Form Validations",
-    "form-wizard": "Form Wizard"
+    "form-wizard": "Form Wizard",
+    "projects": "Projects",
+    "advertisements": "Advertisements",
+    "agreements": "Agreements",
+    "clients": "Clients",
+    "payments": "Payments"
   },
   "dashboards": {
     "pending-orders": "Pending Orders",

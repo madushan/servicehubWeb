@@ -11,7 +11,7 @@ const adminRoot = environment.adminRoot.substr(1); // path cannot start with a s
 
 let routes: Routes = [
   {
-    path: '',
+    path: 'views',
     component: HomeComponent,
     children: [
       {
@@ -33,6 +33,11 @@ let routes: Routes = [
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
       },
+      //   {
+      //     path: 'main',
+      //     loadChildren: () =>
+      //       import('./frontend/frontend.module').then((m) => m.FrontendModule),
+      //   },
       {
         path: 'user',
         loadChildren: () =>

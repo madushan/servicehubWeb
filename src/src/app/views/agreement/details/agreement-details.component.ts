@@ -50,8 +50,8 @@ export class AgreementDetailsComponent implements OnInit {
   }
 
   edit() {
-    this.event.emit(this.agreement);
     this.modalRef.hide();
+    this.event.emit(this.agreement);
   }
 
   //   createFormGroup() {

@@ -13,6 +13,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalConfirmComponent } from './../components/modal-confirm/modal-confirm.component';
+import { Observable } from 'rxjs';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 
 @Component({
@@ -24,6 +25,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   selectAllState = '';
   selected: Project[] = [];
   data: Project[] = [];
+  projects$: Observable<Project[]>;
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
@@ -53,6 +55,13 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     ignoreBackdropClick: true,
     class: 'modal-md',
     //class: 'modal-right'
+  };
+
+  notificationConfig = {
+    timeOut: 5000,
+    showProgressBar: true,
+    pauseOnHover: false,
+    clickToClose: true,
   };
 
   @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
@@ -90,17 +99,11 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
-    this.notifications.success(
-      this.translate.instant('alert.success-alert'),
-      this.translate.instant('alert.success-alert-text'),
-      {
-        timeOut: 10000,
-        showProgressBar: true,
-        pauseOnHover: false,
-        clickToClose: false,
-      }
-    );
+    // this.notifications.success(
+    //   'alert.success-alert', // title
+    //   'alert.success-alert-text', // content
+    //   this.notificationConfig
+    // );
   }
 
   loadData(
@@ -163,18 +166,11 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         console.log(d);
 
         //this.data.push(res.data)
-        this.notifications.success(
-          'Success',
-          'Project created successfully',
-          // this.translate.instant('alert.success-alert'),
-          // this.translate.instant('alert.success-alert-text'),
 
-          {
-            timeOut: 10000,
-            showProgressBar: true,
-            pauseOnHover: false,
-            clickToClose: true,
-          }
+        this.notifications.success(
+          'Create product', // title
+          res.data.title + ' added successfully', // content
+          this.notificationConfig
         );
       });
     });
@@ -209,6 +205,11 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       console.log(res);
       this.projectService.update(res.data).subscribe(() => {
         //this.data.(res.data);
+        this.notifications.info(
+          'Edit product', // title
+          project.title + ' edited successfully', // content
+          this.notificationConfig
+        );
       });
     });
   }
@@ -223,9 +224,15 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     this.bsModalRef.content.modalRef = this.bsModalRef;
     this.bsModalRef.content.event.subscribe((res) => {
       if (res.isConfirmed == true) {
-        this.projectService
-          .delete(+project.id)
-          .subscribe(() => this.data.filter((x) => x.id == project.id));
+        this.projectService.delete(+project.id).subscribe(() => {
+          this.data.filter((x) => x.id == project.id);
+
+          this.notifications.warn(
+            'Delete product', // title
+            project.title + ' deleted successfully', // content
+            this.notificationConfig
+          );
+        });
       }
     });
   }

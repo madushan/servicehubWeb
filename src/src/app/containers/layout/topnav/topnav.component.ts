@@ -16,6 +16,7 @@ import { ChatComponent } from 'src/app/views/app/applications/chat/chat.componen
 export class TopnavComponent implements OnInit, OnDestroy {
   buyUrl = environment.buyUrl;
   adminRoot = environment.adminRoot;
+  homeUrl = environment.homeUrl;
   sidebar: ISidebar;
   subscription: Subscription;
   displayName = 'Sarah Cortney';

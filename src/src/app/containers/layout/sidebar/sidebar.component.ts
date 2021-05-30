@@ -35,6 +35,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     this.subscription = this.sidebarService.getSidebar().subscribe(
       (res) => {
+        console.log(res);
         this.sidebar = res;
       },
       (err) => {
@@ -149,7 +150,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.sidebarService.setContainerClassnames(0, containerClassnames, false);
   }
 
-  openSubMenu(event: { stopPropagation: () => void }, menuItem: IMenuItem): void {
+  openSubMenu(
+    event: { stopPropagation: () => void },
+    menuItem: IMenuItem
+  ): void {
     if (event) {
       event.stopPropagation();
     }
