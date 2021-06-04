@@ -8,12 +8,12 @@ import { ProjectCreateComponent } from './create/project-create.component';
 import { ProjectDetailsComponent } from './details/project-details.component';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalConfirmComponent } from './../components/modal-confirm/modal-confirm.component';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 
 @Component({
@@ -24,16 +24,23 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   displayMode = 'list';
   selectAllState = '';
   selected: Project[] = [];
+  selected$: Observable<Project[]> = of([]);
   data: Project[] = [];
-  projects$: Observable<Project[]>;
+  projects$: Observable<Project[]> = of([]);
   currentPage = 1;
+  currentPage$ = of(1);
   itemsPerPage = 10;
+  itemsPerPage$ = of(10);
   search = '';
   orderBy = '';
   isLoading: boolean;
+  isLoading$ = of(false);
   endOfTheList = false;
+  endOfTheList$ = of(false);
   totalItem = 0;
+  totalItem$ = of(0);
   totalPage = 0;
+  totalPage$ = of(0);
 
   bsModalRef: BsModalRef;
 
@@ -77,7 +84,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   ) {
     this.hotkeysService.add(
       new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
-        this.selected = [...this.data];
+        this.selected$ = this.projects$; // [...this.data];
         return false;
       })
     );
@@ -118,34 +125,38 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     this.orderBy = orderBy;
 
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
-    this.projectService
+    this.projects$ = this.projectService
       .getPageResult(pageSize, currentPage, search, orderBy)
-      .subscribe(
-        (result) => {
-          console.log(result);
+      .pipe(
+        tap((d) => {
+          this.totalItem = d.totalItem;
+          this.totalPage = d.totalPage;
+        }),
+        map((result) => {
           if (result.state) {
-            this.isLoading = false;
-            this.data = result.data;
-            // .pipe(
-            // map(x => {
-            //   console.log(x);
-            //   return {
-            //     x
-            //     //img: x.img.replace('/img/', '/img/products/')
-            //   };
-            // }
-            // ));
-            this.totalItem = result.totalItem;
-            this.totalPage = result.totalPage;
-            this.setSelectAllState();
-          } else {
-            this.endOfTheList = true;
+            return result.data;
+            //     this.isLoading = false;
+            //     this.data = result.data;
+            //     // .pipe(
+            //     // map(x => {
+            //     //   console.log(x);
+            //     //   return {
+            //     //     x
+            //     //     //img: x.img.replace('/img/', '/img/products/')
+            //     //   };
+            //     // }
+            //     // ));
+            //     this.totalItem = result.totalItem;
+            //     this.totalPage = result.totalPage;
+            //     this.setSelectAllState();
+            //   } else {
+            //     this.endOfTheList = true;
+            //   }
+            //   console.log(this.data);
           }
-          console.log(this.data);
-        },
-        (error) => {
-          this.isLoading = false;
-        }
+          // (error) => {
+          //   this.isLoading = false;
+        })
       );
     // this.projectService.getProjects().subscribe(pagingData => {
 
