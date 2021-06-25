@@ -1,6 +1,6 @@
-import { Service } from "./service";
+import { BaseEntity } from './baseEntity';
 
-export class Provider{
+export class Provider extends BaseEntity {
     id:string;
     //services:Service[]
 }
