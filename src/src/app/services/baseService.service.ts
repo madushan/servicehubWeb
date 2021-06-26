@@ -51,7 +51,10 @@ export class BaseService<EntityType extends BaseEntity> {
 
   getAll(): Observable<EntityType[]> {
     // return this.http.get<Project[]>(this.API_URL, this.requestHeaders);
-    return this.http.get<EntityType[]>(this.apiUrl);
+    return this.http.get<EntityType[]>(this.apiUrl)
+    .pipe(
+        tap((x) => console.log(x))
+        );
   }
 
   add(entity: EntityType): Observable<EntityType> {

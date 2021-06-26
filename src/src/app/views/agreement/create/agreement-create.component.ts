@@ -8,7 +8,8 @@ import { esLocale } from 'ngx-bootstrap/locale';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Observable } from 'rxjs';
 import { Provider,Consumer,Agreement, Project} from './../../../models';
-import { ConsumerService } from './../../../services/consumer.service';
+import { ConsumerService,ProjectService,ProviderService } from './../../../services';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-agreement-create',
@@ -48,16 +49,27 @@ export class AgreementCreateComponent implements OnInit {
 
   constructor(private modalService: BsModalService,
      private fb: FormBuilder,
-     private consumerService:ConsumerService) {}
+     private consumerService:ConsumerService,
+     private providerService:ProviderService,
+     private projectService:ProjectService) {}
 
   ngOnInit() {
-    this.consumers$ = this.consumerService.getAll();
+    this.consumers$ = this.consumerService.getAll()
+    .pipe(
+      tap((x) => console.log(x)),
+      map(result => {
+            return  Object.values(result)[1] as any;
+          })
+      );
+    this.providers$ = this.providerService.getAll().pipe(tap((x) => console.log(x)));
+    this.projects$ = this.projectService.getAll().pipe(tap((x) => console.log(x)));
     this.agreementForm = this.createFormGroupWithFB();
     console.log('on init');
     if (this.agreement) {
       console.log(this.agreement);
       this.agreementForm.patchValue(this.agreement);
     }
+    this.consumers$.subscribe((x) => console.log(x));
   }
 
   //   createFormGroup() {
