@@ -14,7 +14,6 @@ import { LayoutContainersModule } from './containers/layout/layout.containers.mo
 import { ProjectService } from './services/project.service';
 import { AdvertisementService } from './services/advertisement.service';
 import { AgreementService } from './services/agreement.service';
-import { ClientService } from './services/client.service';
 import { PaymentService } from './services/payment.service';
 import { FrontendModule } from './views/frontend/frontend.module';
 
@@ -35,7 +34,6 @@ import { FrontendModule } from './views/frontend/frontend.module';
     ProjectService,
     AdvertisementService,
     AgreementService,
-    ClientService,
     PaymentService,
   ],
   bootstrap: [AppComponent],

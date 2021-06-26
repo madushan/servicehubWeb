@@ -5,7 +5,7 @@ import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 // import { IProduct } from 'src/app/data/api.service';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 // import { Advertisement } from '../../models/advertisement';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Agreement } from '../../models/agreement';
 import { AgreementCreateComponent } from './create/agreement-create.component';
@@ -13,6 +13,7 @@ import { AgreementCreateComponent } from './create/agreement-create.component';
 import { AgreementService } from './../../services/agreement.service';
 import { AgreementDetailsComponent } from './details/agreement-details.component';
 import { ModalConfirmComponent } from '../components/modal-confirm/modal-confirm.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-agreement',
@@ -22,7 +23,8 @@ export class AgreementComponent implements OnInit {
   displayMode = 'list';
   selectAllState = '';
   selected: Agreement[] = [];
-  data: Agreement[] = [];
+  data: any[] = [];
+  agreements$: Observable<Agreement[]>;
   currentPage = 1;
   itemsPerPage = 10;
   search = '';
@@ -95,39 +97,23 @@ export class AgreementComponent implements OnInit {
     this.search = search;
     this.orderBy = orderBy;
 
-    // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
-    this.agreementService
+      this.agreements$ = this.agreementService
       .getPageResult(pageSize, currentPage, search, orderBy)
-      .subscribe(
-        (result) => {
-          console.log(result);
-          if (result.state) {
+        .pipe(
+          tap(result => {
             this.isLoading = false;
-            this.data = result.data;
-            // .pipe(
-            // map(x => {
-            //   console.log(x);
-            //   return {
-            //     x
-            //     //img: x.img.replace('/img/', '/img/products/')
-            //   };
-            // }
-            // ));
             this.totalItem = result.totalItem;
             this.totalPage = result.totalPage;
-            this.setSelectAllState();
-          } else {
-            this.endOfTheList = true;
-          }
-          console.log(this.data);
-        },
-        (error) => {
-          this.isLoading = false;
-        }
-      );
-    // this.projectService.getProjects().subscribe(pagingData => {
+            console.log(result);
+          },console.log),
+          map(result => {
+            if (result.state) {
+              this.data = Object.values(result.data)[1] as any;//result.data;
+              return  Object.values(result.data)[1] as any;
+            }
+          })
+        )
 
-    // })
   }
 
   addEntity() {

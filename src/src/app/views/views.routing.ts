@@ -43,11 +43,11 @@ let routes: Routes = [
         loadChildren: () =>
           import('./user/user.module').then((m) => m.UserModule),
       },
-      {
-        path: 'client',
-        loadChildren: () =>
-          import('./client/client.module').then((m) => m.ClientModule),
-      },
+      // {
+      //   path: 'client',
+      //   loadChildren: () =>
+      //     import('./client/client.module').then((m) => m.ClientModule),
+      // },
       {
         path: 'advertisement',
         loadChildren: () =>

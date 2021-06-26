@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PagingResult } from '../models/pagingResult';
 import { environment } from './../../environments/environment';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { BaseEntity } from '../models/baseEntity';
 
@@ -30,7 +30,9 @@ export class BaseService<EntityType extends BaseEntity> {
 
     return this.http
       .get<PagingResult<EntityType>>(this.apiUrl + '/details', { params })
-      .pipe(tap((x) => console.log(x)));
+      .pipe(
+        tap((x) => console.log(x))
+        );
   }
 
   //   protected get requestHeaders(): { headers: HttpHeaders | { [header: string]: string | string[]; } } {

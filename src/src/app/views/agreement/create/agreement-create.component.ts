@@ -2,11 +2,13 @@ import { EventEmitter, Input, OnInit } from '@angular/core';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { Agreement } from '../../../models/agreement';
 
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { Observable } from 'rxjs';
+import { Provider,Consumer,Agreement, Project} from './../../../models';
+import { ConsumerService } from './../../../services/consumer.service';
 
 @Component({
   selector: 'app-agreement-create',
@@ -14,6 +16,10 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 })
 export class AgreementCreateComponent implements OnInit {
   agreementForm: FormGroup;
+
+  providers$:Observable<Provider[]>;
+  consumers$:Observable<Consumer[]>;
+  projects$:Observable<Project[]>;
 
   //public project: Project;
   @Input() public agreement: Agreement;
@@ -40,9 +46,12 @@ export class AgreementCreateComponent implements OnInit {
 
   @ViewChild('template', { static: true }) template: TemplateRef<any>;
 
-  constructor(private modalService: BsModalService, private fb: FormBuilder) {}
+  constructor(private modalService: BsModalService,
+     private fb: FormBuilder,
+     private consumerService:ConsumerService) {}
 
   ngOnInit() {
+    this.consumers$ = this.consumerService.getAll();
     this.agreementForm = this.createFormGroupWithFB();
     console.log('on init');
     if (this.agreement) {
