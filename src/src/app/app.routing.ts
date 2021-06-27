@@ -7,16 +7,16 @@ const routes: Routes = [
   //     loadChildren: () =>
   //       import('./views/views.module').then((m) => m.ViewsModule),
   //   },
-  //   {
-  //     path: 'main',
-  //     loadChildren: () =>
-  //       import('./views/frontend/frontend.module').then((m) => m.FrontendModule),
-  //   },
-  //   {
-  //     path: '',
-  //     redirectTo: 'main',
-  //     pathMatch: 'full',
-  //   },
+    // {
+    //   path: 'main',
+    //   loadChildren: () =>
+    //     import('./views/frontend/frontend.module').then((m) => m.FrontendModule),
+    // },
+    // {
+    //   path: '',
+    //   redirectTo: 'main',
+    //   pathMatch: 'full',
+    // },
 ];
 
 @NgModule({

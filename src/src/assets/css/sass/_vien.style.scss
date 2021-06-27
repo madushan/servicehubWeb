@@ -50,6 +50,9 @@ Table of Contents
 */
 
 /* 00.Variables and Imports */
+// @import "tailwindcss/base";
+// @import "tailwindcss/components";
+// @import "tailwindcss/utilities";
 
 @import url("https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700");
 
@@ -9278,7 +9281,6 @@ app-profile-who-to-follow app-user-follow:last-of-type > div {
 body {
   min-height: calc(100% - 150px);
   position: relative;
-  padding-bottom: 90px;
 
   @include respond-below(xl) {
     min-height: calc(100% - 130px);
