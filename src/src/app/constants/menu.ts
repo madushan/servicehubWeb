@@ -17,39 +17,11 @@ const data: IMenuItem[] = [
     icon: 'simple-icon-briefcase',
     label: 'menu.projects',
     to: `/views/project/projects`,
-    // roles: [UserRole.Admin, UserRole.Editor],
-    // subs: [
-    //   {
-    //     icon: 'simple-icon-briefcase',
-    //     label: 'menu.default',
-    //     to: `project/projects`,
-    //     // roles: [UserRole.Admin],
-    //   },
-    //   {
-    //     icon: 'simple-icon-briefcase',
-    //     label: 'menu.default',
-    //     to: `${adminRoot}/dashboards/default`,
-    //     // roles: [UserRole.Admin],
-    //   },
-    //   {
-    //     icon: 'simple-icon-pie-chart',
-    //     label: 'menu.analytics',
-    //     to: `${adminRoot}/dashboards/analytics`,
-    //     // roles: [UserRole.Admin],
-    //   },
-    //   {
-    //     icon: 'simple-icon-basket-loaded',
-    //     label: 'menu.ecommerce',
-    //     to: `${adminRoot}/dashboards/ecommerce`,
-    //     // roles: [UserRole.Admin, UserRole.Editor],
-    //   },
-    //   {
-    //     icon: 'simple-icon-doc',
-    //     label: 'menu.content',
-    //     to: `${adminRoot}/dashboards/content`,
-    //     // roles: [UserRole.Admin, UserRole.Editor],
-    //   },
-    // ],
+  },
+  {
+    icon: 'simple-icon-briefcase',
+    label: 'menu.works',
+    to: `/views/project/projects`,
   },
   {
     icon: 'iconsminds-digital-drawing',

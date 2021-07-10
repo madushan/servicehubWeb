@@ -89,6 +89,8 @@ import { PagesDropdownComponent } from "./components/dropdowns/pages-dropdown/pa
 import { NotificationDropdownComponent } from "./components/dropdowns/notification-dropdown/notification-dropdown.component";
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user-dropdown.component";
+import { FindTalentComponent } from './views/findTalent/find-talent.component';
+//import { FindWorkComponent } from './views/findWork/find-work.component';
 
 
 
@@ -96,6 +98,9 @@ import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user
   declarations: [
     MainComponent,
     FrontendComponent,
+
+    FindTalentComponent,
+    //FindWorkComponent,
 
 
     DashboardComponent,

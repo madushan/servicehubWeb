@@ -11,7 +11,7 @@
         [routerLink]="['/']"
         class="text-white text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase"
       >
-        Notus Angular
+        Any Servicer
       </a>
       <button
         class="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
@@ -26,7 +26,7 @@
       [ngClass]="{ hidden: !navbarOpen, 'block rounded shadow-lg': navbarOpen }"
       id="example-navbar-warning"
     >
-      <ul class="flex flex-col lg:flex-row list-none mr-auto">
+      <!-- <ul class="flex flex-col lg:flex-row list-none mr-auto">
         <li class="flex items-center">
           <a
             class="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
@@ -38,11 +38,12 @@
             Docs
           </a>
         </li>
-      </ul>
+      </ul> -->
       <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
         <li class="flex items-center">
           <app-pages-dropdown class="block"></app-pages-dropdown>
         </li>
+<!--
         <li class="flex items-center">
           <a
             class="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
@@ -67,9 +68,9 @@
             ></i>
             <span class="lg:hidden inline-block ml-2">Tweet</span>
           </a>
-        </li>
+        </li> -->
 
-        <li class="flex items-center">
+        <!-- <li class="flex items-center">
           <a
             class="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
             href="https://github.com/creativetimofficial/notus-angular?ref=na-auth-navbar"
@@ -80,14 +81,22 @@
             ></i>
             <span class="lg:hidden inline-block ml-2">Star</span>
           </a>
-        </li>
+        </li> -->
 
         <li class="flex items-center">
           <button
-            class="bg-white text-blueGray-700 active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+            class="text-white active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3  ease-linear transition-all duration-150"
             type="button"
           >
-            <i class="fas fa-arrow-alt-circle-down"></i> Download
+            <i class="fas fa-arrow-alt-circle-down"></i> Log In
+          </button>
+        </li>
+        <li class="flex items-center">
+          <button
+            class="bg-white text-blueGray-700 active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3  ease-linear transition-all duration-150"
+            type="button"
+          >
+            <i class="fas fa-sign-in"></i> Sign Up
           </button>
         </li>
       </ul>
