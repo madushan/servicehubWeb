@@ -1,29 +1,32 @@
-import { Component, OnInit, OnDestroy, Renderer2, AfterViewInit, ViewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Hotkey, HotkeysService } from 'angular2-hotkeys';
-import { NotificationsService } from 'angular2-notifications';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AddNewProductModalComponent } from '../../containers/pages/add-new-product-modal/add-new-product-modal.component';
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
+import { ApiService } from '../../data/api.service';
+// import { IProduct } from '../../data/api.service';
 import { ContextMenuComponent } from 'ngx-contextmenu';
-import { Observable, of } from 'rxjs';
+import { ProjectService } from '../../services/project.service';
+import { Project } from '../../models/project';
 import { map, tap } from 'rxjs/operators';
-import { User } from 'src/app/models';
-import { ProjectService, UserService } from 'src/app/services';
-import { ModalConfirmComponent } from '../components/modal-confirm/modal-confirm.component';
-import { UserCreateComponent } from './create/user-create.component';
-import { UserDetailsComponent } from './details/user-details.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NotificationsService, NotificationType } from 'angular2-notifications';
+import { TranslateService } from '@ngx-translate/core';
+import { ModalConfirmComponent } from './../components/modal-confirm/modal-confirm.component';
+import { Observable, of } from 'rxjs';
+import { WorkCreateComponent } from './create/work-create.component';
+import { WorkDetailsComponent } from './details/work-details.component';
+// import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html'
+  selector: 'app-work',
+  templateUrl: './work.component.html',
 })
-export class UserComponent implements OnInit, AfterViewInit {
-
+export class WorkComponent implements OnInit, AfterViewInit {
   displayMode = 'list';
   selectAllState = '';
-  selected: User[] = [];
-  selected$: Observable<User[]> = of([]);
-  users: User[] = [];
-  users$: Observable<User[]> = of([]);
+  selected: Project[] = [];
+  selected$: Observable<Project[]> = of([]);
+  projects: Project[] = [];
+  projects$: Observable<Project[]> = of([]);
   currentPage = 1;
   currentPage$ = of(1);
   itemsPerPage = 10;
@@ -84,12 +87,12 @@ export class UserComponent implements OnInit, AfterViewInit {
     private notifications: NotificationsService,
     private translate: TranslateService,
     //private apiService: ApiService,
-    private userService: UserService,
+    private projectService: ProjectService,
     private modalService: BsModalService
   ) {
     this.hotkeysService.add(
       new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
-        this.selected$ = this.users$; // [...this.data];
+        this.selected$ = this.projects$; // [...this.data];
         return false;
       })
     );
@@ -133,42 +136,42 @@ export class UserComponent implements OnInit, AfterViewInit {
     this.orderBy = orderBy;
     console.log('loading data');
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
-    this.users$ = this.userService
+    this.projects$ = this.projectService
       .getPageResult(pageSize, currentPage, search, orderBy, filterBy)
       .pipe(
         tap((d) => {
           console.log(d);
-          this.users = d.data;
+          this.projects = d.data;
           this.totalItem = d.totalItem;
           this.totalPage = d.totalPage;
-          console.log(this.users);
+          console.log(this.projects);
         }),
         map((result) => {
           if (result.state) {
-            this.users = Object.values(result.data)[1] as any;//result.data;
+            this.projects = Object.values(result.data)[1] as any;//result.data;
             return Object.values(result.data)[1] as any;
           }
         })
       );
-    this.users$.subscribe();
+    this.projects$.subscribe();
     // this.projectService.getProjects().subscribe(pagingData => {
 
     // })
   }
 
   addEntity() {
-    this.config.initialState.project = new User();
+    this.config.initialState.project = new Project();
     this.config.initialState.projectMode = 'add';
 
     this.bsModalRef = this.modalService.show(
-      UserCreateComponent,
+      WorkCreateComponent,
       this.config
     );
     //this.bsModalRef.content.project = new Project();
     this.bsModalRef.content.modalRef = this.bsModalRef;
     this.bsModalRef.content.event.subscribe((res) => {
       //console.log(res);
-      this.userService.add(res.data).subscribe((d) => {
+      this.projectService.add(res.data).subscribe((d) => {
         console.log(d);
 
         //this.data.push(res.data)
@@ -182,12 +185,12 @@ export class UserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  viewEntity(user: User) {
-    console.log(user);
-    this.config.initialState.project = user;
+  viewEntity(project: Project) {
+    console.log(project);
+    this.config.initialState.project = project;
     this.config.class = 'modal-md';
     this.bsModalRef = this.modalService.show(
-      UserDetailsComponent,
+      WorkDetailsComponent,
       this.config
     );
     //this.bsModalRef.content.project = new Project();
@@ -199,31 +202,31 @@ export class UserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  editEntity(user: User) {
-    console.log(user);
-    this.config.initialState.project = user;
+  editEntity(project: Project) {
+    console.log(project);
+    this.config.initialState.project = project;
     this.config.initialState.projectMode = 'edit';
     this.bsModalRef = this.modalService.show(
-      UserCreateComponent,
+      WorkCreateComponent,
       this.config
     );
     //this.bsModalRef.content.project = project; //new Project();
     this.bsModalRef.content.modalRef = this.bsModalRef;
     this.bsModalRef.content.event.subscribe((res) => {
       console.log(res);
-      this.userService.update(res.data).subscribe(() => {
+      this.projectService.update(res.data).subscribe(() => {
         //this.data.(res.data);
         this.notifications.info(
           'Edit product', // title
-          user.name + ' edited successfully', // content
+          project.title + ' edited successfully', // content
           this.notificationConfig
         );
       });
     });
   }
-  deleteEntity(user: User) {
+  deleteEntity(project: Project) {
     this.configDelete.initialState.title =
-      'Are you want to delete ' + user.name + '?';
+      'Are you want to delete ' + project.title + '?';
     this.bsModalRef = this.modalService.show(
       ModalConfirmComponent,
       this.configDelete
@@ -232,12 +235,12 @@ export class UserComponent implements OnInit, AfterViewInit {
     this.bsModalRef.content.modalRef = this.bsModalRef;
     this.bsModalRef.content.event.subscribe((res) => {
       if (res.isConfirmed == true) {
-        this.userService.delete(+user.id).subscribe(() => {
-          this.users.filter((x) => x.id == user.id);
+        this.projectService.delete(+project.id).subscribe(() => {
+          this.projects.filter((x) => x.id == project.id);
 
           this.notifications.warn(
             'Delete product', // title
-            user.name + ' deleted successfully', // content
+            project.title + ' deleted successfully', // content
             this.notificationConfig
           );
         });
@@ -253,10 +256,10 @@ export class UserComponent implements OnInit, AfterViewInit {
   //     this.bsModalRef =  this.addNewModalRef.show();
   //   }
 
-  isSelected(p: User): boolean {
+  isSelected(p: Project): boolean {
     return this.selected.findIndex((x) => x.id === p.id) > -1;
   }
-  onSelect(item: User): void {
+  onSelect(item: Project): void {
     if (this.isSelected(item)) {
       this.selected = this.selected.filter((x) => x.id !== item.id);
     } else {
@@ -266,7 +269,7 @@ export class UserComponent implements OnInit, AfterViewInit {
   }
 
   setSelectAllState(): void {
-    if (this.selected.length === this.users.length) {
+    if (this.selected.length === this.projects.length) {
       this.selectAllState = 'checked';
     } else if (this.selected.length !== 0) {
       this.selectAllState = 'indeterminate';
@@ -277,7 +280,7 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   selectAllChange($event): void {
     if ($event.target.checked) {
-      this.selected = [...this.users];
+      this.selected = [...this.projects];
     } else {
       this.selected = [];
     }
@@ -303,24 +306,12 @@ export class UserComponent implements OnInit, AfterViewInit {
     this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.workStage.value);
   }
 
-  onContextMenuClick(action: string, item: User): void {
+  onContextMenuClick(action: string, item: Project): void {
     console.log(
       'onContextMenuClick -> action :  ',
       action,
-      ', item.name :',
-      item.name
+      ', item.title :',
+      item.title
     );
   }
-
-  // constructor(private renderer: Renderer2) { }
-
-  // ngOnInit(): void {
-  //   this.renderer.addClass(document.body, 'background');
-  //   this.renderer.addClass(document.body, 'no-footer');
-  // }
-
-  // ngOnDestroy(): void {
-  //   this.renderer.removeClass(document.body, 'background');
-  //   this.renderer.removeClass(document.body, 'no-footer');
-  // }
 }

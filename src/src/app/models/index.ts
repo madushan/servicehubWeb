@@ -10,6 +10,7 @@ import { Provider } from './provider';
 import { Skill } from './skill';
 import { SocialMedia } from './socialMedia';
 import { UserArea } from './userArea';
+import { User } from './user';
 
 export {
   Advertisement,
@@ -23,5 +24,6 @@ export {
   Provider,
   Skill,
   SocialMedia,
-  UserArea
+  UserArea,
+  User
 }

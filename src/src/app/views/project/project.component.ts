@@ -25,7 +25,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   selectAllState = '';
   selected: Project[] = [];
   selected$: Observable<Project[]> = of([]);
-  data: Project[] = [];
+  projects: Project[] = [];
   projects$: Observable<Project[]> = of([]);
   currentPage = 1;
   currentPage$ = of(1);
@@ -44,9 +44,17 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   bsModalRef: BsModalRef;
 
+  projectStages = [
+    { label: 'Bidding', value: 'bidding' },
+    { label: 'Current Projects', value: 'current' },
+    { label: 'Finished Projects', value: 'finished' }];
+
+  projectStage = this.projectStages[1];
+
   config = {
     initialState: {
       project: null,
+      projectMode: 'add'
     },
     backdrop: true,
     ignoreBackdropClick: true,
@@ -101,7 +109,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       this.itemsPerPage,
       this.currentPage,
       this.search,
-      this.orderBy
+      this.orderBy,
+      this.projectStage.value
     );
   }
 
@@ -117,54 +126,42 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     pageSize: number = 10,
     currentPage: number = 1,
     search: string = '',
-    orderBy: string = ''
+    orderBy: string = '',
+    filterBy: string
   ): void {
     this.itemsPerPage = pageSize;
     this.currentPage = currentPage;
     this.search = search;
     this.orderBy = orderBy;
-
+    console.log('loading data');
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
     this.projects$ = this.projectService
-      .getPageResult(pageSize, currentPage, search, orderBy)
+      .getPageResult(pageSize, currentPage, search, orderBy, filterBy)
       .pipe(
         tap((d) => {
+          console.log(d);
+          this.projects = d.data;
           this.totalItem = d.totalItem;
           this.totalPage = d.totalPage;
+          console.log(this.projects);
         }),
         map((result) => {
           if (result.state) {
-            return result.data;
-            //     this.isLoading = false;
-            //     this.data = result.data;
-            //     // .pipe(
-            //     // map(x => {
-            //     //   console.log(x);
-            //     //   return {
-            //     //     x
-            //     //     //img: x.img.replace('/img/', '/img/products/')
-            //     //   };
-            //     // }
-            //     // ));
-            //     this.totalItem = result.totalItem;
-            //     this.totalPage = result.totalPage;
-            //     this.setSelectAllState();
-            //   } else {
-            //     this.endOfTheList = true;
-            //   }
-            //   console.log(this.data);
+            this.projects = Object.values(result.data)[1] as any;//result.data;
+            return Object.values(result.data)[1] as any;
           }
-          // (error) => {
-          //   this.isLoading = false;
         })
       );
+    this.projects$.subscribe();
     // this.projectService.getProjects().subscribe(pagingData => {
 
     // })
   }
 
   addEntity() {
-    this.config.initialState.project = null;
+    this.config.initialState.project = new Project();
+    this.config.initialState.projectMode = 'add';
+
     this.bsModalRef = this.modalService.show(
       ProjectCreateComponent,
       this.config
@@ -205,7 +202,9 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   editEntity(project: Project) {
+    console.log(project);
     this.config.initialState.project = project;
+    this.config.initialState.projectMode = 'edit';
     this.bsModalRef = this.modalService.show(
       ProjectCreateComponent,
       this.config
@@ -236,7 +235,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     this.bsModalRef.content.event.subscribe((res) => {
       if (res.isConfirmed == true) {
         this.projectService.delete(+project.id).subscribe(() => {
-          this.data.filter((x) => x.id == project.id);
+          this.projects.filter((x) => x.id == project.id);
 
           this.notifications.warn(
             'Delete product', // title
@@ -269,7 +268,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   setSelectAllState(): void {
-    if (this.selected.length === this.data.length) {
+    if (this.selected.length === this.projects.length) {
       this.selectAllState = 'checked';
     } else if (this.selected.length !== 0) {
       this.selectAllState = 'indeterminate';
@@ -280,7 +279,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
   selectAllChange($event): void {
     if ($event.target.checked) {
-      this.selected = [...this.data];
+      this.selected = [...this.projects];
     } else {
       this.selected = [];
     }
@@ -288,20 +287,21 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy);
+    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy, this.projectStage.value);
   }
 
   itemsPerPageChange(perPage: number): void {
-    this.loadData(perPage, 1, this.search, this.orderBy);
+    this.loadData(perPage, 1, this.search, this.orderBy, this.projectStage.value);
   }
 
   changeOrderBy(item: any): void {
-    this.loadData(this.itemsPerPage, 1, this.search, item.value);
+    this.projectStage = item;
+    this.loadData(this.itemsPerPage, 1, this.search, item.value, this.projectStage.value);
   }
 
   searchKeyUp(event): void {
     const val = event.target.value.toLowerCase().trim();
-    this.loadData(this.itemsPerPage, 1, val, this.orderBy);
+    this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.projectStage.value);
   }
 
   onContextMenuClick(action: string, item: Project): void {

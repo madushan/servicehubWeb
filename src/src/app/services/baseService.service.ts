@@ -12,27 +12,29 @@ import { BaseEntity } from '../models/baseEntity';
   providedIn: 'root',
 })
 export class BaseService<EntityType extends BaseEntity> {
-  constructor(public http: HttpClient, public apiUrl: string) {}
+  constructor(public http: HttpClient, public apiUrl: string) { }
 
   getPageResult(
     pageSize: number = 10,
     currentPage: number = 1,
     search: string = '',
-    orderBy: string = ''
+    orderBy: string = '',
+    filterBy: string = ''
   ) {
     let params = new HttpParams();
     params = params.append('pageSize', pageSize + '');
     params = params.append('currentPage', currentPage + '');
     params = params.append('search', search);
     params = params.append('orderBy', orderBy);
+    params = params.append('filterBy', filterBy);
 
-    //console.log(API_URL);
+    console.log(this.apiUrl + '/details');
 
     return this.http
       .get<PagingResult<EntityType>>(this.apiUrl + '/details', { params })
       .pipe(
         tap((x) => console.log(x))
-        );
+      );
   }
 
   //   protected get requestHeaders(): { headers: HttpHeaders | { [header: string]: string | string[]; } } {
@@ -52,13 +54,14 @@ export class BaseService<EntityType extends BaseEntity> {
   getAll(): Observable<EntityType[]> {
     // return this.http.get<Project[]>(this.API_URL, this.requestHeaders);
     return this.http.get<EntityType[]>(this.apiUrl)
-    .pipe(
+      .pipe(
         tap((x) => console.log(x))
-        );
+      );
   }
 
   add(entity: EntityType): Observable<EntityType> {
     console.log(entity);
+    //console.log(this.apiUrl);
     return this.http.post<EntityType>(this.apiUrl, entity);
   }
 

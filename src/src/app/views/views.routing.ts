@@ -70,6 +70,16 @@ let routes: Routes = [
         loadChildren: () =>
           import('./project/project.module').then((m) => m.ProjectModule),
       },
+      {
+        path: 'work',
+        loadChildren: () =>
+          import('./work/work.module').then((m) => m.WorkModule),
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+      },
       { path: 'error', component: ErrorComponent },
       { path: 'unauthorized', component: UnauthorizedComponent },
       { path: '**', redirectTo: '/error' },
@@ -101,4 +111,4 @@ let routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ViewRoutingModule {}
+export class ViewRoutingModule { }

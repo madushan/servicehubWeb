@@ -108,6 +108,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
     }
     this.subscription = this.sidebarService.getSidebar().subscribe(
       (res) => {
+        console.log(res);
         this.sidebar = res;
       },
       (err) => {
@@ -128,6 +129,9 @@ export class TopnavComponent implements OnInit, OnDestroy {
     if (e) {
       e.stopPropagation();
     }
+
+    console.log(menuClickCount);
+    console.log(containerClassnames);
 
     setTimeout(() => {
       const event = document.createEvent('HTMLEvents');

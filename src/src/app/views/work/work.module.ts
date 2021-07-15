@@ -35,27 +35,20 @@ import { UiModalsContainersModule } from '../../containers/ui/modals/ui.modals.c
 import { ComponentsRoutingModule } from '../app/ui/components/components.routing';
 import { ViewsModule } from '../views.module';
 import { CommonComponentModule } from './../components/common-components.module';
-
-import { UserComponent } from './user.component';
-import { UserCreateComponent } from './create/user-create.component';
-import { UserDetailsComponent } from './details/user-details.component';
-import { UserRoutingModule } from './user.routing';
+import { WorkRoutingModule } from './work.routing';
+import { WorkComponent } from './work.component';
+import { WorkCreateComponent } from './create/work-create.component';
+import { WorkDetailsComponent } from './details/work-details.component';
 
 @NgModule({
   declarations: [
-    UserComponent,
-    UserCreateComponent,
-    UserDetailsComponent
+    WorkComponent,
+    WorkCreateComponent,
+    WorkDetailsComponent,
   ],
   imports: [
-    // CommonModule,
-    UserRoutingModule,
-    // FormsModule,
-    // SharedModule,
-    // SimpleNotificationsModule.forRoot(),
-    // ComponentsStateButtonModule,
-
     CommonModule,
+    WorkRoutingModule,
     PagesContainersModule,
     FormsModuleAngular,
     TranslateModule,
@@ -90,6 +83,7 @@ import { UserRoutingModule } from './user.routing';
     YaCoreModule.forRoot({ apiKey: '658f67a2-fd77-42e9-b99e-2bd48c4ccad4' }),
     SortablejsModule,
     BootstrapModule,
-  ]
+    //CommonComponentModule,
+  ],
 })
-export class UserModule { }
+export class WorkModule { }

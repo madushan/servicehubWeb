@@ -4,14 +4,14 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { Project } from 'src/app/models/project';
-import { ProjectService } from 'src/app/services';
+import { Project } from '../../../models/project';
+import { ProjectService } from '../../../services';
 
 @Component({
-  selector: 'app-project-create',
-  templateUrl: './project-create.component.html',
+  selector: 'app-work-create',
+  templateUrl: './work-create.component.html',
 })
-export class ProjectCreateComponent implements OnInit {
+export class WorkCreateComponent implements OnInit {
   public event: EventEmitter<any> = new EventEmitter();
 
   public modalRef: BsModalRef;

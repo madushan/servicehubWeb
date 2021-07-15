@@ -1,0 +1,79 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <p class="list-item-heading mb-3">Filter Bidding Projects</p>
+    <!-- <p class="mb-3">Title</p> -->
+    <!-- <div class="row">
+      <div class="input-group mb-3 input-group-sm col-10">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">From</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+    </div> -->
+    <!-- <div class="row">
+      <div class="input-group mb-3 input-group-sm col-10">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">To</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+    </div> -->
+    <!-- <p class="text-muted text-small mb-4">
+        {{ 'survey.categories' | translate }}
+    </p> -->
+    <div class="form-group mb-3">
+      <label class="text-muted">Added Time</label>
+      <div class="custom-control custom-radio">
+        <input class="custom-control-input" type="radio" value="24hours" name="filtertime" formControlName="filterTime" id="filtertime1">
+        <label class="custom-control-label" for="filtertime1">
+          Last 24 Hours
+        </label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input class="custom-control-input" type="radio" value="7days" name="filtertime" formControlName="filterTime" id="filtertime2">
+        <label class="custom-control-label" for="filtertime2">
+          Last 7 Days
+        </label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input class="custom-control-input" type="radio" value="month" name="filtertime" formControlName="filterTime" id="filtertime3">
+        <label class="custom-control-label" for="filtertime3">
+          Last Month
+        </label>
+      </div>
+      <!-- <div *ngIf="basicForm.get('radio').errors?.required && form.submitted" class="invalid-tooltip">Radio is required</div> -->
+    </div>
+    <div class="form-group mb-3">
+      <label class="text-muted">Required Expertise Level</label>
+      <div class="custom-control custom-radio">
+        <input class="custom-control-input" type="radio" value="basic" name="filterexpertise" formControlName="expertLevel" id="filterexpertise1">
+        <label class="custom-control-label" for="filterexpertise1">
+          Basic
+        </label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input class="custom-control-input" type="radio" value="middle" name="filterexpertise" formControlName="expertLevel" id="filterexpertise2">
+        <label class="custom-control-label" for="filterexpertise2">
+          Middle
+        </label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input class="custom-control-input" type="radio" value="expert" name="filterexpertise" formControlName="expertLevel" id="filterexpertise3">
+        <label class="custom-control-label" for="filterexpertise3">
+          Expert
+        </label>
+      </div>
+      <!-- <div *ngIf="basicForm.get('radio').errors?.required && form.submitted" class="invalid-tooltip">Radio is required</div> -->
+    </div>
+    <p class="text-muted mb-3">Required Skills</p>
+    <p class="text-muted mb-3">Pricing</p>
+    <!-- <p class="text-muted text-small mb-2">{{ 'survey.label' | translate }}</p> -->
+    <!-- <div>
+      <p class="d-sm-inline-block mb-1">
+        <span
+          [class]="'badge badge-pill badge-blue'">Label</span>
+      </p>
+      <p class="d-sm-inline-block mb-1"></p>
+    </div> -->
+  </div>
+</div>

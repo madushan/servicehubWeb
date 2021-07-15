@@ -1,13 +1,17 @@
 import { BaseEntity } from "./baseEntity";
-import { Contact,UserArea,SocialMedia,Project,Agreement } from '.';
+import { Contact, UserArea, SocialMedia, Project, Agreement, User } from '.';
 
 export class Consumer extends BaseEntity {
-    name:string;
-    address:string;
-    identityPhoto:string;
-    contacts:Contact[];
-    consumerAreas:UserArea[];
-    socialMedias:SocialMedia[];
-    projects:Project[];
-    agreements:Agreement[];
+  constructor(
+    public userId: number = 0,
+    public user: User = null,
+    public projects: Project[] = []
+  ) { super(); }
+  // name:string;
+  // address:string;
+  // identityPhoto:string;
+  // contacts:Contact[];
+  // consumerAreas:UserArea[];
+  // socialMedias:SocialMedia[];
+  // agreements: Agreement[];
 }

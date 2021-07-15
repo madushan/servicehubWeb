@@ -97,22 +97,22 @@ export class AgreementComponent implements OnInit {
     this.search = search;
     this.orderBy = orderBy;
 
-      this.agreements$ = this.agreementService
+    this.agreements$ = this.agreementService
       .getPageResult(pageSize, currentPage, search, orderBy)
-        .pipe(
-          tap(result => {
-            this.isLoading = false;
-            this.totalItem = result.totalItem;
-            this.totalPage = result.totalPage;
-            console.log(result);
-          },console.log),
-          map(result => {
-            if (result.state) {
-              this.data = Object.values(result.data)[1] as any;//result.data;
-              return  Object.values(result.data)[1] as any;
-            }
-          })
-        )
+      .pipe(
+        tap(result => {
+          this.isLoading = false;
+          this.totalItem = result.totalItem;
+          this.totalPage = result.totalPage;
+          console.log(result);
+        }, console.log),
+        map(result => {
+          if (result.state) {
+            this.data = Object.values(result.data)[1] as any;//result.data;
+            return Object.values(result.data)[1] as any;
+          }
+        })
+      )
 
   }
 
@@ -156,7 +156,7 @@ export class AgreementComponent implements OnInit {
       this.config
     );
     //this.bsModalRef.content.project = project; //new Project();
-    this.bsModalRef.content.modalRef = this.bsModalRef;
+    //this.bsModalRef.content.modalRef = this.bsModalRef;
     this.bsModalRef.content.event.subscribe((res) => {
       console.log(res);
       this.agreementService.update(res.data).subscribe(() => {

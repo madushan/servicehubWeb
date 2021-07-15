@@ -3,9 +3,9 @@
   [displayMode]="displayMode"
   [itemOptionsPerPage]="[5, 10, 20]"
   [itemsPerPage]="itemsPerPage"
-  [itemOptionsOrders]="projectStages"
-  [itemOrder] = "projectStage"
   [selectAllState]="selectAllState"
+  [itemOptionsOrders]="workStages"
+  [itemOrder] = "workStage"
   (changeDisplayMode)="changeDisplayMode($event)"
   (selectAllChange)="selectAllChange($event)"
   (itemsPerPageChange)="itemsPerPageChange($event)"
@@ -65,7 +65,7 @@
         >
           <a
             class="list-item-heading mb-0 truncate w-40 w-xs-100"
-            (click)="viewEntity(p)"
+            href="javascript:;"
           >
             {{ p.title }}
           </a>
@@ -85,13 +85,13 @@
             >
               View
             </button>
-            <button [disabled]="p.stage=='finished'"
+            <button
               class="btn btn-outline-info btn-xs mb-1"
               (click)="editEntity(p)"
             >
               Edit
             </button>
-            <button [disabled]="p.stage=='finished'"
+            <button
               class="btn btn-outline-danger btn-xs mb-1"
               (click)="deleteEntity(p)"
             >

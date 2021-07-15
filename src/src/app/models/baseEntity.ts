@@ -1,3 +1,9 @@
-export class BaseEntity{
-    id:string;
+export class BaseEntity {
+  id: number;
+  isActive: boolean;
+  stage: string;
+  constructor() {
+    this.isActive = true;
+    this.stage = '';
+  }
 }

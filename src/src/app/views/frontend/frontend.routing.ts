@@ -60,7 +60,7 @@ let routes: Routes = [
 
   // no layout views
   { path: "profile", component: ProfileComponent },
-  { path: "landing", component: LandingComponent },
+  //{ path: "landing", component: LandingComponent },
 
   //old components
   {
@@ -88,7 +88,8 @@ let routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'main',
+    component: LandingComponent,
+    //redirectTo: 'main',
     pathMatch: 'full',
   },
 

@@ -10,6 +10,7 @@ import { ProviderService } from './provider.service';
 import { SkillService } from './skill.service';
 import { SocialMediaService } from './socialMedia.service';
 import { UserAreaService } from './userArea.service';
+import { UserService } from './user.service';
 
 export {
   AdvertisementService,
@@ -23,5 +24,6 @@ export {
   ProviderService,
   SkillService,
   SocialMediaService,
-  UserAreaService
+  UserAreaService,
+  UserService
 }

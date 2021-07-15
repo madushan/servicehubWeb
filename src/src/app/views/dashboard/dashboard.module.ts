@@ -35,27 +35,23 @@ import { UiModalsContainersModule } from '../../containers/ui/modals/ui.modals.c
 import { ComponentsRoutingModule } from '../app/ui/components/components.routing';
 import { ViewsModule } from '../views.module';
 import { CommonComponentModule } from './../components/common-components.module';
+import { DashboardRoutingModule } from './dashboard.routing';
+import { DashboardComponent } from './dashboard.component';
+import { BiddingProjectComponent } from './bidding/bidding-project.component';
+import { BiddingProjectDetailsComponent } from './bidding/biddingProjectDetails/bidding-project-details.component';
+import { BidQueryComponent } from './bidding/bidQuery/bid-query.component';
 
-import { UserComponent } from './user.component';
-import { UserCreateComponent } from './create/user-create.component';
-import { UserDetailsComponent } from './details/user-details.component';
-import { UserRoutingModule } from './user.routing';
 
 @NgModule({
   declarations: [
-    UserComponent,
-    UserCreateComponent,
-    UserDetailsComponent
+    DashboardComponent,
+    BiddingProjectComponent,
+    BidQueryComponent,
+    BiddingProjectDetailsComponent
   ],
   imports: [
-    // CommonModule,
-    UserRoutingModule,
-    // FormsModule,
-    // SharedModule,
-    // SimpleNotificationsModule.forRoot(),
-    // ComponentsStateButtonModule,
-
     CommonModule,
+    DashboardRoutingModule,
     PagesContainersModule,
     FormsModuleAngular,
     TranslateModule,
@@ -90,6 +86,10 @@ import { UserRoutingModule } from './user.routing';
     YaCoreModule.forRoot({ apiKey: '658f67a2-fd77-42e9-b99e-2bd48c4ccad4' }),
     SortablejsModule,
     BootstrapModule,
+    //CommonComponentModule,
+  ],
+  entryComponents: [
+    BiddingProjectDetailsComponent
   ]
 })
-export class UserModule { }
+export class DashboardModule { }
