@@ -37,15 +37,25 @@ export class UserCreateComponent implements OnInit {
 
   createFormGroup() {
     return this.fb.group({
-      title: '',
-      description: '',
-      requiredSkills: '',
-      requiredExpertiseLevel: '',
-      estimatedBudget: ''
+      name: '',
+      address: '',
+      identityPhoto: '',
+      //contacts: '',
+      //userAreas: '',
+      //socialMedias: '',
+      providerIntroduction: '',
+      //skills: '',
+      expertiseLevel: '',
+      //portfolios: '',
+      //educations: '',
+      currentEmployment: '',
+      hourlyRate: '',
+      //agreements: '',
+      //projects: ''
     });
   }
 
-  saveProject() {
+  saveUser() {
 
     this.project.title = this.projectFormGroup.value.title;
     this.project.description = this.projectFormGroup.value.description;

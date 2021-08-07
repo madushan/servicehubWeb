@@ -15,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ModalConfirmComponent } from './../components/modal-confirm/modal-confirm.component';
 import { Observable, of } from 'rxjs';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
+import { ProjectStages } from './../../data/enums';
 
 @Component({
   selector: 'app-project',
@@ -45,11 +46,12 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   bsModalRef: BsModalRef;
 
   projectStages = [
-    { label: 'Bidding', value: 'bidding' },
-    { label: 'Current Projects', value: 'current' },
-    { label: 'Finished Projects', value: 'finished' }];
+    { label: 'New', value: ProjectStages.new },
+    { label: 'Current Projects', value: ProjectStages.working },
+    { label: 'Finished Projects', value: ProjectStages.finished }];
 
-  projectStage = this.projectStages[1];
+  projectStage: string = this.projectStages[0].value;
+  selectedStage = this.projectStages[0];
 
   config = {
     initialState: {
@@ -102,6 +104,10 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         return false;
       })
     );
+    if (localStorage.getItem('projectstage') !== null) {
+      this.projectStage = localStorage.getItem('projectstage');
+      this.selectedStage = this.projectStages.find(p => p.value == this.projectStage);
+    }
   }
 
   ngOnInit(): void {
@@ -110,7 +116,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       this.currentPage,
       this.search,
       this.orderBy,
-      this.projectStage.value
+      this.projectStage
     );
   }
 
@@ -185,6 +191,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   viewEntity(project: Project) {
+
     console.log(project);
     this.config.initialState.project = project;
     this.config.class = 'modal-md';
@@ -199,6 +206,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
       console.log(res);
       this.editEntity(res);
     });
+
   }
 
   editEntity(project: Project) {
@@ -287,21 +295,22 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy, this.projectStage.value);
+    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy, this.projectStage);
   }
 
   itemsPerPageChange(perPage: number): void {
-    this.loadData(perPage, 1, this.search, this.orderBy, this.projectStage.value);
+    this.loadData(perPage, 1, this.search, this.orderBy, this.projectStage);
   }
 
   changeOrderBy(item: any): void {
-    this.projectStage = item;
-    this.loadData(this.itemsPerPage, 1, this.search, item.value, this.projectStage.value);
+    this.projectStage = item.value;
+    localStorage.setItem('projectstage', this.projectStage);
+    this.loadData(this.itemsPerPage, 1, this.search, item.value, this.projectStage);
   }
 
   searchKeyUp(event): void {
     const val = event.target.value.toLowerCase().trim();
-    this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.projectStage.value);
+    this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.projectStage);
   }
 
   onContextMenuClick(action: string, item: Project): void {

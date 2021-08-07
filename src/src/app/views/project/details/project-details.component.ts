@@ -3,6 +3,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Project } from './../../../models/project';
+// import { ProjectStatus } from './../../../data/enums';
 
 @Component({
   selector: 'app-project-details',
@@ -11,6 +12,7 @@ import { Project } from './../../../models/project';
 export class ProjectDetailsComponent implements OnInit {
   projectForm: FormGroup;
   rate = 4;
+
 
   //public project: Project;
   @Input() public project: Project;
@@ -37,7 +39,9 @@ export class ProjectDetailsComponent implements OnInit {
 
   @ViewChild('template', { static: true }) template: TemplateRef<any>;
 
-  constructor(private modalService: BsModalService, private fb: FormBuilder) {}
+  constructor(private modalService: BsModalService, private fb: FormBuilder) {
+
+  }
 
   ngOnInit() {
     // this.projectForm = this.createFormGroupWithFB();

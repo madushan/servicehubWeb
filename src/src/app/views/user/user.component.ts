@@ -46,7 +46,9 @@ export class UserComponent implements OnInit, AfterViewInit {
     { label: 'Current Projects', value: 'current' },
     { label: 'Finished Projects', value: 'finished' }];
 
-  workStage = this.workStages[1];
+  selectedStage = this.workStages[0];
+
+  workStage: string = '';
 
   config = {
     initialState: {
@@ -107,7 +109,7 @@ export class UserComponent implements OnInit, AfterViewInit {
       this.currentPage,
       this.search,
       this.orderBy,
-      this.workStage.value
+      this.workStage
     );
   }
 
@@ -126,7 +128,7 @@ export class UserComponent implements OnInit, AfterViewInit {
     orderBy: string = '',
     filterBy: string
 
-  ): void {
+  ) {
     this.itemsPerPage = pageSize;
     this.currentPage = currentPage;
     this.search = search;
@@ -285,22 +287,22 @@ export class UserComponent implements OnInit, AfterViewInit {
   }
 
   pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy, this.workStage.value);
+    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy, this.workStage);
   }
 
   itemsPerPageChange(perPage: number): void {
-    this.loadData(perPage, 1, this.search, this.orderBy, this.workStage.value);
+    this.loadData(perPage, 1, this.search, this.orderBy, this.workStage);
   }
 
   changeOrderBy(item: any): void {
     //this.loadData(this.itemsPerPage, 1, this.search, item.value);
     this.workStage = item;
-    this.loadData(this.itemsPerPage, 1, this.search, item.value, this.workStage.value);
+    this.loadData(this.itemsPerPage, 1, this.search, item.value, this.workStage);
   }
 
   searchKeyUp(event): void {
     const val = event.target.value.toLowerCase().trim();
-    this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.workStage.value);
+    this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.workStage);
   }
 
   onContextMenuClick(action: string, item: User): void {

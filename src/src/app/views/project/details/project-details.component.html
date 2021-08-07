@@ -2,7 +2,7 @@
 <div>
   <div class="modal-header">
     <h4 class="modal-title pull-left">
-      {{ "pages.add-new-modal-title" | translate }}
+      {{ project.title }}
     </h4>
     <button
       type="button"
@@ -16,11 +16,11 @@
   <div class="modal-body">
     <div class="card mb-4">
       <div class="position-absolute card-top-buttons">
-        <button class="btn btn-outline-white icon-button" (click)="edit()">
+        <button class="btn btn-outline-secondary icon-button" (click)="edit()">
           <i class="simple-icon-pencil"></i>
         </button>
       </div>
-      <img src="/assets/img/details/1.jpg" alt="Detail" class="card-img-top" />
+      <!-- <img src="/assets/img/details/1.jpg" alt="Detail" class="card-img-top" /> -->
       <div class="card-body">
         <p class="text-muted text-small mb-2">
           {{ "pages.description" | translate }}
@@ -45,7 +45,15 @@
         <p class="text-muted text-small mb-2">
           {{ "pages.price" | translate }}
         </p>
-        <p class="mb-3">$8,14</p>
+        <p class="mb-3">{{project.estimatedBudget}}</p>
+        <p class="text-muted text-small mb-2">
+          Estimated Effort
+        </p>
+        <p class="mb-3">{{project.estimatedTimeEffort}}</p>
+        <p class="text-muted text-small mb-2">
+          Required Expertise
+        </p>
+        <p class="mb-3">{{project.requiredExpertiseLevel}}</p>
         <p class="text-muted text-small mb-2">Tags</p>
         <div class="mb-3">
           <p class="d-sm-inline-block mb-1">
@@ -73,9 +81,9 @@
           </p>
         </div>
         <p class="text-muted text-small mb-2">
-          {{ "pages.is-vegan" | translate }}
+         Project Status
         </p>
-        <p>No</p>
+        <p class="mb-3">{{project.status}}</p>
       </div>
     </div>
   </div>

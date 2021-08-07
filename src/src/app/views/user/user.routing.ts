@@ -6,6 +6,8 @@ const routes: Routes = [
   {
     path: '', component: UserComponent,
     children: [
+      { path: '', redirectTo: 'users', pathMatch: 'full' },
+      { path: 'users', component: UserComponent },
       // { path: '', redirectTo: 'login', pathMatch: 'full' },
       // { path: 'login', component: LoginComponent },
       // { path: 'register', component: RegisterComponent },

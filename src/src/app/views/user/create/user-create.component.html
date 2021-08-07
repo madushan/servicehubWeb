@@ -1,4 +1,4 @@
-<form [formGroup]="projectFormGroup" (ngSubmit)="saveProject()">
+<form [formGroup]="projectFormGroup" (ngSubmit)="saveUser()">
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       Add User
@@ -12,24 +12,32 @@
       <div class="card-body">
             <input hidden type="text" class="form-control"  />
             <div class="form-group">
-                <label>Title</label>
-                <input type="text" class="form-control" formControlName="title" name="title"/>
+                <label>Name</label>
+                <input type="text" class="form-control" formControlName="name" name="name"/>
             </div>
             <div class="form-group">
-                <label>Description</label>
-                <textarea type="text" class="form-control" formControlName="description" name="description"></textarea>
+                <label>Address</label>
+                <textarea type="text" class="form-control" formControlName="address" name="address"></textarea>
             </div>
             <div class="form-group">
-                <label>Skills</label>
-                <input type="text" class="form-control" formControlName="requiredSkills" name="skills"/>
+                <label>Photo</label>
+                <input type="text" class="form-control" formControlName="identityPhoto" name="identityPhoto"/>
+            </div>
+            <div class="form-group">
+                <label>Introduction</label>
+                <input type="text" class="form-control" formControlName="providerIntroduction" name="providerIntroduction"/>
             </div>
             <div class="form-group">
                 <label>Expertise Level</label>
-                <input type="text" class="form-control" formControlName="requiredExpertiseLevel" name="expertiseLevel"/>
+                <input type="text" class="form-control" formControlName="expertiseLevel" name="expertiseLevel"/>
             </div>
             <div class="form-group">
-                <label>Payment Type</label>
-                <input type="text" class="form-control" formControlName="estimatedBudget" name="paymentType"/>
+                <label>Current Employment</label>
+                <input type="text" class="form-control" formControlName="currentEmployment" name="currentEmployment"/>
+            </div>
+            <div class="form-group">
+                <label>Hourly Rate</label>
+                <input type="text" class="form-control" formControlName="hourlyRate" name="hourlyRate"/>
             </div>
       </div>
     </div>

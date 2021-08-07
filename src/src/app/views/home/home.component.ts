@@ -9,6 +9,7 @@ import {
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { Subscription } from 'rxjs';
 import { ISidebar, SidebarService } from 'src/app/containers/layout/sidebar/sidebar.service';
+import { UserService } from 'src/app/services';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -18,7 +19,9 @@ import { environment } from 'src/environments/environment';
 export class HomeComponent implements OnInit, OnDestroy {
   sidebar: ISidebar;
   subscription: Subscription;
-  constructor(private sidebarService: SidebarService) {
+  constructor(private sidebarService: SidebarService,
+    private userService: UserService) {
+
   }
 
   ngOnInit(): void {
@@ -30,6 +33,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.error(`An error occurred: ${err.message}`);
       }
     );
+  }
+
+  // consumer: 3, provider: 4, admin: 2
+  setUser() {
+    this.userService.get(3).subscribe(user => {
+      localStorage.setItem('currentUserId', user.id.toString());
+    });
   }
 
   ngOnDestroy(): void {

@@ -14,6 +14,7 @@ import { ModalConfirmComponent } from './../components/modal-confirm/modal-confi
 import { Observable, of } from 'rxjs';
 import { WorkCreateComponent } from './create/work-create.component';
 import { WorkDetailsComponent } from './details/work-details.component';
+import { ProjectStages } from 'src/app/data/enums';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 
 @Component({
@@ -45,9 +46,9 @@ export class WorkComponent implements OnInit, AfterViewInit {
   bsModalRef: BsModalRef;
 
   workStages = [
-    { label: 'Proposed', value: 'proposed' },
-    { label: 'Current Projects', value: 'current' },
-    { label: 'Finished Projects', value: 'finished' }];
+    { label: 'New', value: ProjectStages.new },
+    { label: 'Current Projects', value: ProjectStages.working },
+    { label: 'Finished Projects', value: ProjectStages.finished }];
 
   workStage = this.workStages[1];
 

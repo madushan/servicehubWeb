@@ -1,5 +1,5 @@
 import { BaseEntity } from "./baseEntity";
-import { Contact, UserArea, SocialMedia, Project, Agreement, Consumer, Provider } from '.';
+import { Contact, UserArea, SocialMedia, Project, Agreement, Consumer, Provider, Education, Portfolio, Skill } from '.';
 export class User extends BaseEntity {
   constructor(
     public name: string = '',
@@ -8,10 +8,21 @@ export class User extends BaseEntity {
     public contacts: Contact[] = [],
     public userAreas: UserArea[] = [],
     public socialMedias: SocialMedia[] = [],
-    public consumerId: number = 0,
-    public consumer: Consumer = null,
-    public providerId: number = 0,
-    public provider: Provider = null
+    //provider
+    public providerIntroduction: string = '',
+    public skills: Skill[] = [],
+    public expertiseLevel: string = '',
+    public portfolios: Portfolio[] = [],
+    public educations: Education[] = [],
+    public currentEmployment: string = '',
+    public hourlyRate: number = 0,
+    public agreements: Agreement[] = [],
+    //consumer
+    public projects: Project[] = []
+    //public consumerId: number = 0,
+    //public consumer: Consumer = null,
+    //public providerId: number = 0,
+    //public provider: Provider = null
     // public projects: Project[] = [],
     // public agreements: Agreement[] = []
   ) { super(); }

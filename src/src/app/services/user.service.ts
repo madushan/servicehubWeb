@@ -9,7 +9,7 @@ import { Advertisement } from '../models/advertisement';
 import { Agreement } from '../models/agreement';
 import { User } from '../models';
 
-const API_URL = environment.webApiUrl + '/userarea';
+const API_URL = environment.webApiUrl + '/users';
 
 @Injectable({
   providedIn: 'root',

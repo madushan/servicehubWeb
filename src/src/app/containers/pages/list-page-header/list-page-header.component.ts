@@ -1,4 +1,4 @@
-import { Component,  ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { Component, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-list-page-header',
@@ -16,7 +16,7 @@ export class ListPageHeaderComponent {
   @Input() itemsPerPage = 10;
   @Input() itemOptionsPerPage = [5, 10, 20];
   @Input() itemOrder = { label: 'Product Name', value: 'title' };
-  @Input()  itemOptionsOrders = [
+  @Input() itemOptionsOrders = [
     { label: 'Product Name', value: 'title' },
     { label: 'Category', value: 'category' },
     { label: 'Status', value: 'status' }];
@@ -39,14 +39,14 @@ export class ListPageHeaderComponent {
   onAddNewItem(): void {
     this.addNewItem.emit(null);
   }
-  selectAll(event): void  {
+  selectAll(event): void {
     this.selectAllChange.emit(event);
   }
-  onChangeItemsPerPage(item): void  {
+  onChangeItemsPerPage(item): void {
     this.itemsPerPageChange.emit(item);
   }
 
-  onChangeOrderBy(item): void  {
+  onChangeOrderBy(item): void {
     this.itemOrder = item;
     this.changeOrderBy.emit(item);
   }

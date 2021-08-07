@@ -68,7 +68,7 @@
 
     <ul class="nav nav-pills nav-fill">
       <li class="nav-item">
-        <a class="nav-link c-pointer active" [routerLink]="['/views/project/projects']">Projects</a>
+        <a class="nav-link c-pointer" [routerLink]="['/views/project/projects']">Projects</a>
       </li>
       <li class="nav-item">
         <a class="nav-link c-pointer" [routerLink]="['/views/work/works']" >Works</a>
@@ -76,12 +76,42 @@
       <li class="nav-item" >
         <a class="nav-link c-pointer" [routerLink]="['/views/dashboard/dashboard']">Dashboard</a>
       </li>
+      <li class="nav-item dropdown ml-1 mr-1">
+        <div class="btn-group" dropdown>
+          <a id="button-basic" dropdownToggle class="nav-link c-pointer dropdown-toggle"
+            aria-controls="dropdown-basic">
+            Admin <span class="caret"></span>
+          </a>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem"><a class="dropdown-item" [routerLink]="['/views/user/users']">Users</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="javascript:;">{{'nav.another-action' | translate}}</a></li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem"><a class="dropdown-item" href="javascript:;">{{'nav.another-link' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+      </li>
       <!-- <li class="nav-item">
         <a class="nav-link c-pointer disabled">{{'nav.disabled' | translate}}</a>
       </li> -->
     </ul>
-
-
+    <!-- <div class="btn-group ml-2" dropdown>
+      <button
+        dropdownToggle
+        type="button"
+        class="language-button dropdown-toggle btn btn-light  d-sm-inline-block"
+      >
+        Admin <span class="caret"></span>
+      </button>
+      <ul *dropdownMenu class="dropdown-menu" role="menu">
+        <li>
+          <a   class="nav-link c-pointer" [routerLink]="['/views/user/users']" >Users</a>
+        </li>
+      </ul>
+    </div> -->
+    <!-- href="javascript:;" -->
+<!-- role="menuitem" (click)="onLanguageChange()" -->
+<!-- class="dropdown-item" -->
     <!-- <a
       class="btn btn-sm btn-outline-primary ml-2 d-none d-xl-inline-block"
       [href]="buyUrl"
@@ -89,6 +119,7 @@
       >&nbsp;BUY&nbsp;</a
     > -->
   </div>
+
 
   <a class="navbar-logo" href="/">
     <span class="logo d-none d-xs-block"></span>
