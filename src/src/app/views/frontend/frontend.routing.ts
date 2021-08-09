@@ -9,7 +9,6 @@ import { environment } from './../../../environments/environment';
 import { FrontendComponent } from './frontend.component';
 import { MainComponent } from './main.component';
 import { UserRole } from 'src/app/shared/auth.roles';
-import { AuthGuard } from 'src/app/shared/auth.guard';
 
 
 // layouts
@@ -31,6 +30,8 @@ import { IndexComponent } from "./views/index/index.component";
 import { LandingComponent } from "./views/landing/landing.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 
+import { CanActivate } from '@angular/router';
+import { AuthGuard } from '../../services/auth/auth-guard.service';
 
 const adminRoot = environment.adminRoot.substr(1); // path cannot start with a slash
 
@@ -39,6 +40,7 @@ let routes: Routes = [
   {
     path: "admin",
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: "dashboard", component: DashboardComponent },
       { path: "settings", component: SettingsComponent },
