@@ -16,9 +16,13 @@ import { AdvertisementService } from './services/advertisement.service';
 import { AgreementService } from './services/agreement.service';
 import { PaymentService } from './services/payment.service';
 import { FrontendModule } from './views/frontend/frontend.module';
+import { AuthGuard } from './services/auth/auth-guard.service';
+import { AuthService } from './services/auth/auth.service';
 
 @NgModule({
   imports: [
+    // AuthGuard,
+    // AuthService,
     BrowserModule,
     ViewsModule,
     FrontendModule,
@@ -35,6 +39,8 @@ import { FrontendModule } from './views/frontend/frontend.module';
     AdvertisementService,
     AgreementService,
     PaymentService,
+    AuthGuard,
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })
