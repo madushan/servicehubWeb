@@ -40,7 +40,7 @@ let routes: Routes = [
   {
     path: "admin",
     component: AdminComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
       { path: "dashboard", component: DashboardComponent },
       { path: "settings", component: SettingsComponent },

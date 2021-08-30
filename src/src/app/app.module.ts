@@ -22,6 +22,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
   imports: [
+    // AuthGuard,
+    // AuthService,
     BrowserModule,
     ViewsModule,
     FrontendModule,
