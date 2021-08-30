@@ -16,6 +16,7 @@ import { ModalConfirmComponent } from './../components/modal-confirm/modal-confi
 import { Observable, of } from 'rxjs';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 import { ProjectStages } from './../../data/enums';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'app-project',
@@ -42,6 +43,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   totalItem$ = of(0);
   totalPage = 0;
   totalPage$ = of(0);
+
+
 
   bsModalRef: BsModalRef;
 
@@ -90,7 +93,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     private translate: TranslateService,
     //private apiService: ApiService,
     private projectService: ProjectService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private authService: AuthService
   ) {
     this.hotkeysService.add(
       new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
@@ -111,6 +115,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log(this.authService.getCurretUser());
     this.loadData(
       this.itemsPerPage,
       this.currentPage,

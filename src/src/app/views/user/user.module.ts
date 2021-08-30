@@ -40,12 +40,17 @@ import { UserComponent } from './user.component';
 import { UserCreateComponent } from './create/user-create.component';
 import { UserDetailsComponent } from './details/user-details.component';
 import { UserRoutingModule } from './user.routing';
+import { UserRegisterComponent } from './apiUser/register/user-register.component';
+import { AuthService } from 'src/app/services';
+import { LoginComponent } from './apiUser/login/login.component';
 
 @NgModule({
   declarations: [
     UserComponent,
     UserCreateComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    UserRegisterComponent,
+    LoginComponent
   ],
   imports: [
     // CommonModule,
@@ -90,6 +95,13 @@ import { UserRoutingModule } from './user.routing';
     YaCoreModule.forRoot({ apiKey: '658f67a2-fd77-42e9-b99e-2bd48c4ccad4' }),
     SortablejsModule,
     BootstrapModule,
+  ],
+  providers: [
+    AuthService
+  ],
+  entryComponents: [
+    UserRegisterComponent,
+    LoginComponent
   ]
 })
 export class UserModule { }

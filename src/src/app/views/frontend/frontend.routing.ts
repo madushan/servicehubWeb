@@ -22,8 +22,8 @@ import { SettingsComponent } from "./views/admin/settings/settings.component";
 import { TablesComponent } from "./views/admin/tables/tables.component";
 
 // auth views
-import { LoginComponent } from "./views/auth/login/login.component";
-import { RegisterComponent } from "./views/auth/register/register.component";
+// import { LoginComponent } from "./views/auth/login/login.component";
+// import { RegisterComponent } from "./views/auth/register/register.component";
 
 // no layouts views
 import { IndexComponent } from "./views/index/index.component";
@@ -50,15 +50,15 @@ let routes: Routes = [
     ],
   },
   // auth views
-  {
-    path: "auth",
-    component: AuthComponent,
-    children: [
-      { path: "login", component: LoginComponent },
-      { path: "register", component: RegisterComponent },
-      { path: "", redirectTo: "login", pathMatch: "full" },
-    ],
-  },
+  // {
+  //   path: "auth",
+  //   component: AuthComponent,
+  //   children: [
+  //     { path: "login", component: LoginComponent },
+  //     { path: "register", component: RegisterComponent },
+  //     { path: "", redirectTo: "login", pathMatch: "full" },
+  //   ],
+  // },
 
   // no layout views
   { path: "profile", component: ProfileComponent },

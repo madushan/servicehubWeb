@@ -21,8 +21,8 @@ export interface IPasswordReset {
 }
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
-  constructor(private auth: AngularFireAuth) {}
+export class OldAuthService {
+  constructor(private auth: AngularFireAuth) { }
 
   // tslint:disable-next-line:typedef
   signIn(credentials: ISignInCredentials) {

@@ -57,8 +57,8 @@ import { SettingsComponent } from "./views/admin/settings/settings.component";
 import { TablesComponent } from "./views/admin/tables/tables.component";
 
 // auth views
-import { LoginComponent } from "./views/auth/login/login.component";
-import { RegisterComponent } from "./views/auth/register/register.component";
+// import { LoginComponent } from "./views/auth/login/login.component";
+// import { RegisterComponent } from "./views/auth/register/register.component";
 
 // no layouts views
 import { IndexComponent } from "./views/index/index.component";
@@ -131,8 +131,8 @@ import { FindTalentComponent } from './views/findTalent/find-talent.component';
     MapsComponent,
     SettingsComponent,
     TablesComponent,
-    LoginComponent,
-    RegisterComponent,
+    // LoginComponent,
+    // RegisterComponent,
     IndexComponent,
     LandingComponent,
     ProfileComponent,
@@ -177,4 +177,4 @@ import { FindTalentComponent } from './views/findTalent/find-talent.component';
   ],
   providers: [AuthGuard, ChatService],
 })
-export class FrontendModule {}
+export class FrontendModule { }

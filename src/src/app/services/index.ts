@@ -11,6 +11,7 @@ import { SkillService } from './skill.service';
 import { SocialMediaService } from './socialMedia.service';
 import { UserAreaService } from './userArea.service';
 import { UserService } from './user.service';
+import { AuthService } from './auth/auth.service';
 
 export {
   AdvertisementService,
@@ -25,5 +26,6 @@ export {
   SkillService,
   SocialMediaService,
   UserAreaService,
-  UserService
+  UserService,
+  AuthService
 }

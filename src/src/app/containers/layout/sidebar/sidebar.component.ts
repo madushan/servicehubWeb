@@ -5,7 +5,7 @@ import { SidebarService, ISidebar } from './sidebar.service';
 import menuItems, { IMenuItem } from 'src/app/constants/menu';
 import { Subscription } from 'rxjs';
 import { UserRole } from 'src/app/shared/auth.roles';
-import { AuthService } from 'src/app/shared/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,9 +29,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService
   ) {
-    this.authService.getUser().then((user) => {
-      this.currentUser = user;
-    });
+    // this.authService.getUser().then((user) => {
+    //   this.currentUser = user;
+    // });
 
     this.subscription = this.sidebarService.getSidebar().subscribe(
       (res) => {
@@ -302,9 +302,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
   filteredMenuItems(menuItems: IMenuItem[]): IMenuItem[] {
     return menuItems
       ? menuItems.filter(
-          (x) =>
-            !x.roles || (x.roles && x.roles.includes(this.currentUser.role))
-        )
+        (x) =>
+          !x.roles || (x.roles && x.roles.includes(this.currentUser.role))
+      )
       : [];
   }
 }

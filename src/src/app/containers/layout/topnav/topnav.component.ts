@@ -3,11 +3,11 @@ import { Subscription } from 'rxjs';
 import { SidebarService, ISidebar } from '../sidebar/sidebar.service';
 import { Router } from '@angular/router';
 import { LangService, Language } from 'src/app/shared/lang.service';
-import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 import { getThemeColor, setThemeColor } from 'src/app/utils/util';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ChatComponent } from 'src/app/views/app/applications/chat/chat.component';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-topnav',
@@ -19,13 +19,16 @@ export class TopnavComponent implements OnInit, OnDestroy {
   homeUrl = environment.homeUrl;
   sidebar: ISidebar;
   subscription: Subscription;
-  displayName = 'Sarah Cortney';
+  displayName = '';
   languages: Language[];
   currentLanguage: string;
   isSingleLang;
   isFullScreen = false;
   isDarkModeActive = false;
   searchKey = '';
+
+  currentUser = null;
+  userId = '';
 
   bsModalRef: BsModalRef;
   config = {
@@ -49,6 +52,10 @@ export class TopnavComponent implements OnInit, OnDestroy {
     this.currentLanguage = this.langService.languageShorthand;
     this.isSingleLang = this.langService.isSingleLang;
     this.isDarkModeActive = getThemeColor().indexOf('dark') > -1 ? true : false;
+    this.currentUser = this.authService.getCurretUser();
+    console.log(this.currentUser);
+    this.displayName = this.currentUser.Name;
+    this.userId = this.currentUser.Id;
   }
 
   showChatWindow() {
@@ -101,20 +108,20 @@ export class TopnavComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    if (await this.authService.getUser()) {
-      this.displayName = await this.authService.getUser().then((user) => {
-        return user.displayName;
-      });
-    }
-    this.subscription = this.sidebarService.getSidebar().subscribe(
-      (res) => {
-        console.log(res);
-        this.sidebar = res;
-      },
-      (err) => {
-        console.error(`An error occurred: ${err.message}`);
-      }
-    );
+    // if (await this.authService.getUser()) {
+    //   this.displayName = await this.authService.getUser().then((user) => {
+    //     return user.displayName;
+    //   });
+    // }
+    // this.subscription = this.sidebarService.getSidebar().subscribe(
+    //   (res) => {
+    //     console.log(res);
+    //     this.sidebar = res;
+    //   },
+    //   (err) => {
+    //     console.error(`An error occurred: ${err.message}`);
+    //   }
+    // );
   }
 
   ngOnDestroy(): void {
@@ -157,9 +164,9 @@ export class TopnavComponent implements OnInit, OnDestroy {
   };
 
   onSignOut(): void {
-    this.authService.signOut().subscribe(() => {
-      this.router.navigate(['/']);
-    });
+    this.authService.logout();
+    this.router.navigate(['/']);
+
   }
 
   searchKeyUp(event: KeyboardEvent): void {

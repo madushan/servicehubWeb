@@ -29,7 +29,6 @@ export class UserCreateComponent implements OnInit {
 
   ngOnInit() {
     this.projectFormGroup = this.createFormGroup();
-
     if (this.project) {
       this.projectFormGroup.patchValue(this.project);
     }
