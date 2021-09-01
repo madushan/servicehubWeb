@@ -35,6 +35,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
   itemsPerPage$ = of(10);
   search = '';
   orderBy = '';
+  entityType = 'projects';
   isLoading: boolean;
   isLoading$ = of(false);
   endOfTheList = false;
@@ -138,7 +139,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     currentPage: number = 1,
     search: string = '',
     orderBy: string = '',
-    filterBy: string
+    filterBy: string = ''
   ): void {
     this.itemsPerPage = pageSize;
     this.currentPage = currentPage;
@@ -147,18 +148,18 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     console.log('loading data');
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
     this.projects$ = this.projectService
-      .getPageResult(pageSize, currentPage, search, orderBy, filterBy)
+      .getPageResult(pageSize, currentPage, search, orderBy, filterBy,this.entityType)
       .pipe(
         tap((d) => {
           console.log(d);
           this.projects = d.data;
           this.totalItem = d.totalItem;
           this.totalPage = d.totalPage;
-          console.log(this.projects);
         }),
         map((result) => {
           if (result.state) {
             this.projects = Object.values(result.data)[1] as any;//result.data;
+          console.log(this.projects);
             return Object.values(result.data)[1] as any;
           }
         })

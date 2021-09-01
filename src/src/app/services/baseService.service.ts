@@ -19,7 +19,8 @@ export class BaseService<EntityType extends BaseEntity> {
     currentPage: number = 1,
     search: string = '',
     orderBy: string = '',
-    filterBy: string = ''
+    filterBy: string = '',
+    entityType:string = ''
   ) {
     let params = new HttpParams();
     params = params.append('pageSize', pageSize + '');
@@ -27,6 +28,7 @@ export class BaseService<EntityType extends BaseEntity> {
     params = params.append('search', search);
     params = params.append('orderBy', orderBy);
     params = params.append('filterBy', filterBy);
+    params = params.append('entityType',entityType);
 
     console.log(this.apiUrl + '/details');
 
