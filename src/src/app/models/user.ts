@@ -1,5 +1,5 @@
 import { BaseEntity } from "./baseEntity";
-import { Contact, UserArea, SocialMedia, Project, Agreement, Consumer, Provider, Education, Portfolio, Skill } from '.';
+import { Contact, UserArea, SocialMedia, Project, Agreement, Education, Portfolio, Skill } from '.';
 export class User extends BaseEntity {
   constructor(
     public name: string = '',

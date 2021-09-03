@@ -1,5 +1,6 @@
 import { BaseEntity } from './baseEntity';
-import { Consumer, Skill, User } from '.';
+import {  Skill, User } from '.';
+import { Agreement } from './agreement';
 export class Project extends BaseEntity {
   constructor(
     public title: string = '',
@@ -9,8 +10,10 @@ export class Project extends BaseEntity {
     public requiredExpertiseLevel: string = '',
     public estimatedBudget: number = 0,
     public category: string = '',
-    //public consumerId: number = 1,
-    public consumer: User = null
+    public consumerId: number = 1,
+    public consumer: User = null,
+    public agreementId: number = 1,
+    public agreement:Agreement = null
   ) { super() }
 }
 //project published time

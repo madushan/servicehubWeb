@@ -48,7 +48,8 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
     { label: 'Current Projects', value: 'current' },
     { label: 'Finished Projects', value: 'finished' }];
 
-  projectStage = this.projectStages[1];
+  projectStage = "New";
+  entityType = 'bidding';//filter in backend services
 
   config = {
     initialState: {
@@ -109,7 +110,7 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
       this.currentPage,
       this.search,
       this.orderBy,
-      this.projectStage.value
+      this.projectStage
     );
   }
 
@@ -135,7 +136,7 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
     console.log('loading data');
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
     this.projects$ = this.projectService
-      .getPageResult(pageSize, currentPage, search, orderBy, filterBy)
+      .getPageResult(pageSize, currentPage, search, orderBy, filterBy,this.entityType)
       .pipe(
         tap((d) => {
           console.log(d);
@@ -146,12 +147,16 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
         }),
         map((result) => {
           if (result.state) {
-            this.projects = Object.values(result.data)[1] as any;//result.data;
-            return Object.values(result.data)[1] as any;
+            // this.projects = Object.values(result.data)[1] as any;//result.data;
+            // return Object.values(result.data)[1] as any;
+
+            this.projects = result.data;//result.data;
+              console.log(this.projects);
+              return result.data;
           }
         })
       );
-    this.projects$.subscribe();
+    //this.projects$.subscribe();
     // this.projectService.getProjects().subscribe(pagingData => {
 
     // })
@@ -219,22 +224,22 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
   }
 
   pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy, this.projectStage.value);
+    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy, this.projectStage);
   }
 
-  itemsPerPageChange(perPage: number): void {
-    this.loadData(perPage, 1, this.search, this.orderBy, this.projectStage.value);
-  }
+  // itemsPerPageChange(perPage: number): void {
+  //   this.loadData(perPage, 1, this.search, this.orderBy, this.projectStage.value);
+  // }
 
-  changeOrderBy(item: any): void {
-    this.projectStage = item;
-    this.loadData(this.itemsPerPage, 1, this.search, item.value, this.projectStage.value);
-  }
+  // changeOrderBy(item: any): void {
+  //   this.projectStage = item;
+  //   this.loadData(this.itemsPerPage, 1, this.search, item.value, this.projectStage.value);
+  // }
 
-  searchKeyUp(event): void {
-    const val = event.target.value.toLowerCase().trim();
-    this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.projectStage.value);
-  }
+  // searchKeyUp(event): void {
+  //   const val = event.target.value.toLowerCase().trim();
+  //   this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.projectStage.value);
+  // }
 
   onContextMenuClick(action: string, item: Project): void {
     console.log(

@@ -40,6 +40,7 @@ import { UiModalsContainersModule } from 'src/app/containers/ui/modals/ui.modals
 import { ComponentsRoutingModule } from '../app/ui/components/components.routing';
 import { ViewsModule } from '../views.module';
 import { CommonComponentModule } from './../components/common-components.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import { CommonComponentModule } from './../components/common-components.module'
     ContextMenuModule.forRoot({
       useBootstrap4: true,
     }),
-
+    NgSelectModule,
     ComponentsRoutingModule,
     FormsModule,
     UiModalsContainersModule,

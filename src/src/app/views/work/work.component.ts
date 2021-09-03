@@ -149,9 +149,9 @@ export class WorkComponent implements OnInit, AfterViewInit {
         }),
         map((result) => {
           if (result.state) {
-            this.projects = Object.values(result.data)[1] as any;//result.data;
-            console.log(this.projects);
-            return Object.values(result.data)[1] as any;
+            this.projects = result.data;//result.data;
+              console.log(this.projects);
+              return result.data;
           }
         })
       );

@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsModalRef } from "ngx-bootstrap/modal";
 import { NotificationsService } from "angular2-notifications";
 import { AuthService } from "src/app/services";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login",
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private notifications: NotificationsService,
+    private router:Router,
     private authService: AuthService) {
     this.loginDto = new LoginUserDTO();
   }
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.value.password
       }).subscribe(tk => {
         console.log(tk);
+        this.router.navigate(['views']);
       });
 
     this.modalRef.hide();

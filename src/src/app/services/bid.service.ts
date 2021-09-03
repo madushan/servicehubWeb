@@ -5,14 +5,14 @@ import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { BaseService } from './baseService.service';
-import { Consumer } from '../models';
+import { Bid } from '../models';
 
-const API_URL = environment.webApiUrl + '/consumers';
+const API_URL = environment.webApiUrl + '/bids';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConsumerService extends BaseService<Consumer> {
+export class BidService extends BaseService<Bid> {
   constructor(public http: HttpClient) {
     super(http, API_URL);
   }

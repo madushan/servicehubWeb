@@ -7,8 +7,8 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { esLocale } from 'ngx-bootstrap/locale';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Observable } from 'rxjs';
-import { Provider, Consumer, Agreement, Project } from './../../../models';
-import { ConsumerService, ProjectService, ProviderService } from './../../../services';
+import {  Agreement, Project } from './../../../models';
+import {  ProjectService } from './../../../services';
 import { map, tap } from 'rxjs/operators';
 
 @Component({
@@ -18,8 +18,8 @@ import { map, tap } from 'rxjs/operators';
 export class AgreementCreateComponent implements OnInit {
   agreementForm: FormGroup;
 
-  providers$: Observable<Provider[]>;
-  consumers$: Observable<Consumer[]>;
+  providers$: Observable<any[]>;
+  consumers$: Observable<any[]>;
   projects$: Observable<Project[]>;
 
   //public project: Project;
@@ -49,19 +49,17 @@ export class AgreementCreateComponent implements OnInit {
 
   constructor(private modalService: BsModalService,
     private fb: FormBuilder,
-    private consumerService: ConsumerService,
-    private providerService: ProviderService,
     private projectService: ProjectService) { }
 
   ngOnInit() {
-    this.consumers$ = this.consumerService.getAll()
-      .pipe(
-        tap((x) => console.log(x)),
-        map(result => {
-          return Object.values(result)[1] as any;
-        })
-      );
-    this.providers$ = this.providerService.getAll().pipe(tap((x) => console.log(x)));
+    // this.consumers$ = this.consumerService.getAll()
+    //   .pipe(
+    //     tap((x) => console.log(x)),
+    //     map(result => {
+    //       return Object.values(result)[1] as any;
+    //     })
+    //   );
+    // this.providers$ = this.providerService.getAll().pipe(tap((x) => console.log(x)));
     this.projects$ = this.projectService.getAll().pipe(tap((x) => console.log(x)));
     this.agreementForm = this.createFormGroupWithFB();
     console.log('on init');

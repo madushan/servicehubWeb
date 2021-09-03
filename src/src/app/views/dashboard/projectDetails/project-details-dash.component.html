@@ -1,8 +1,8 @@
 <!-- <ng-template #template> -->
-<div>
-  <!-- <div class="modal-header">
+<!-- <div>
+  <div class="modal-header">
     <h4 class="modal-title pull-left">
-      {{ "pages.add-new-modal-title" | translate }}
+      {{ project.title }}
     </h4>
     <button
       type="button"
@@ -14,32 +14,15 @@
     </button>
   </div> -->
   <div class="modal-body">
-    <!-- <div class="card mb-4"> -->
-      <div class="position-absolute card-top-buttons" style="margin-right: -0px;margin-top: -0px;">
-        <button
-          type="button"
-          class="close pull-right"
-          aria-label="Close"
-          (click)="modalRef.hide()"
-        >
-          <span aria-hidden="true">&times;</span>
+    <div class="card mb-4">
+      <div class="position-absolute card-top-buttons">
+        <button [ngClass]="showBids ? 'btn-secondary' :'btn-outline-secondary'" class="btn" (click)="showBidding()">
+          Bid
         </button>
-        <!-- <button class="btn btn-outline-white icon-button" (click)="edit()">
-          <i class="simple-icon-pencil"></i>
-        </button> -->
       </div>
-      <tabset class="separator-tabs">
-        <tab heading="Project">
-          <div class="row">
-            <app-project-dash-details [project]="project"></app-project-dash-details>
-          </div>
-        </tab>
-        <tab heading="Bids">
-          <app-profile-friends></app-profile-friends>
-        </tab>
-      </tabset>
-      <!-- <img src="/assets/img/details/1.jpg" alt="Detail" class="card-img-top" />
+      <!-- <img src="/assets/img/details/1.jpg" alt="Detail" class="card-img-top" /> -->
       <div class="card-body">
+        <h5 class="card-title">{{ project.title }}</h5>
         <p class="text-muted text-small mb-2">
           {{ "pages.description" | translate }}
         </p>
@@ -63,7 +46,15 @@
         <p class="text-muted text-small mb-2">
           {{ "pages.price" | translate }}
         </p>
-        <p class="mb-3">$8,14</p>
+        <p class="mb-3">{{project.estimatedBudget}}</p>
+        <p class="text-muted text-small mb-2">
+          Estimated Effort
+        </p>
+        <p class="mb-3">{{project.estimatedTimeEffort}}</p>
+        <p class="text-muted text-small mb-2">
+          Required Expertise
+        </p>
+        <p class="mb-3">{{project.requiredExpertiseLevel}}</p>
         <p class="text-muted text-small mb-2">Tags</p>
         <div class="mb-3">
           <p class="d-sm-inline-block mb-1">
@@ -91,11 +82,37 @@
           </p>
         </div>
         <p class="text-muted text-small mb-2">
-          {{ "pages.is-vegan" | translate }}
+         Project Status
         </p>
-        <p>No</p>
-      </div> -->
-    <!-- </div> -->
+        <p class="mb-3">{{project.status}}</p>
+      </div>
+    </div>
+
+
+    <div class="card mb-4" *ngIf="showBids">
+      <div class="card-body">
+        <h5 class="card-title">Bid Proposal</h5>
+
+        <form [formGroup]="bidForm" (ngSubmit)="saveBid()">
+          <div class="form-group">
+                <label>Description</label>
+                <textarea type="text" class="form-control" formControlName="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="text" class="form-control" formControlName="amount" name="amount"/>
+            </div>
+            <div class="form-group">
+                <label>Required Time</label>
+                <input type="text" class="form-control" formControlName="requiredTime" name="requiredTime"/>
+            </div>
+            <button class="btn btn-secondary">
+              Save Bid
+            </button>
+        </form>
+
+      </div>
+    </div>
   </div>
   <!-- <div class="modal-footer">
     <button
@@ -109,5 +126,5 @@
       {{ "pages.submit" | translate }}
     </button>
   </div> -->
-</div>
+<!-- </div> -->
 <!-- </ng-template> -->
