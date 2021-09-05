@@ -84,6 +84,18 @@
          Project Status
         </p>
         <p class="mb-3">{{project.status}}</p>
+          <div>
+            <div>
+              <div>
+                <button type="button"
+                  class="btn btn-outline-primary  btn-lg mb-1">Terminate
+                </button>
+              </div>
+              <button type="button" (click)="changeStatus()"
+                class="btn btn-primary  btn-lg mb-1">{{nextAction}}
+              </button>
+            </div>
+          </div>
       </div>
     </div>
   </div>

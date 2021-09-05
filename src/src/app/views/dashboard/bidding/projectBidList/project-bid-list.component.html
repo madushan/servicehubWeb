@@ -1,0 +1,63 @@
+<div *ngFor="let bid of bids$ | async; let i = index">
+      <div class="d-flex flex-grow-1 min-width-zero">
+        <div
+          class="
+            card-body
+            align-self-center
+            d-flex
+            flex-column flex-md-row
+            justify-content-between
+            min-width-zero
+            align-items-md-center
+          "
+        >
+          <a
+            class="list-item-heading mb-0 truncate w-40 w-xs-100"
+            (click)="viewEntity(bid)"
+          >
+            {{ bid.description }}
+          </a>
+          <p class="mb-0 text-muted text-small w-15 w-xs-100">
+            {{ bid.amount }}
+          </p>
+          <p class="mb-0 text-muted text-small w-15 w-xs-100">
+            {{ bid.requiredTime }}
+          </p>
+          <!-- <div class="w-15 w-xs-100">
+            <span [class]="'badge badge-pill badge-primary'">primary</span>
+          </div> -->
+          <!-- <div>
+            <button
+              class="btn btn-outline-success btn-xs mb-1"
+              (click)="viewEntity(p)"
+            >
+              View
+            </button>
+            <button [disabled]="p.stage=='finished'"
+              class="btn btn-outline-info btn-xs mb-1"
+              (click)="editEntity(p)"
+            >
+              Edit
+            </button>
+            <button [disabled]="p.stage=='finished'"
+              class="btn btn-outline-danger btn-xs mb-1"
+              (click)="deleteEntity(p)"
+            >
+              Delete
+            </button>
+          </div> -->
+        </div>
+        <!-- <label
+          class="custom-control custom-checkbox mb-1 align-self-center pr-4"
+        >
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            [id]="'customCheck' + i"
+            [checked]="isSelected(p)"
+            (change)="onSelect(p)"
+          />
+          <label class="custom-control-label" [for]="'customCheck' + i"></label>
+        </label> -->
+      </div>
+    </div>

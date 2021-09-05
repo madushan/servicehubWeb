@@ -136,7 +136,7 @@ export class UserComponent implements OnInit, AfterViewInit {
     console.log('loading data');
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
     this.users$ = this.userService
-      .getPageResult(pageSize, currentPage, search, orderBy, filterBy)
+      .getPageResult(pageSize, currentPage, search, orderBy, filterBy,'')
       .pipe(
         tap((d) => {
           console.log(d);
@@ -146,13 +146,14 @@ export class UserComponent implements OnInit, AfterViewInit {
           console.log(this.users);
         }),
         map((result) => {
+          console.log(result);
           if (result.state) {
-            this.users = Object.values(result.data)[1] as any;//result.data;
-            return Object.values(result.data)[1] as any;
+            this.users = result.data;
+            return result.data;
           }
         })
       );
-    this.users$.subscribe();
+    this.users$.subscribe(c => console.log(c));
     // this.projectService.getProjects().subscribe(pagingData => {
 
     // })

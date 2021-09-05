@@ -129,6 +129,6 @@ export class FrontendRoutingModule {
    *
    */
   constructor() {
-    console.log('FrontendRoutingModule');
+    //console.log('FrontendRoutingModule');
   }
 }

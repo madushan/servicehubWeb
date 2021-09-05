@@ -4,28 +4,30 @@ import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { ApiService } from './../../../data/api.service';
 // import { IProduct } from 'src/app/data/api.service';
 import { ContextMenuComponent } from 'ngx-contextmenu';
-import { ProjectService } from './../../../services/project.service';
-import { Project } from './../../../models/project';
+import { ProjectService,UserService } from './../../../services';
+// import { Project } from './../../../models/project';
 import { map, tap } from 'rxjs/operators';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalConfirmComponent } from './../../components/modal-confirm/modal-confirm.component';
 import { Observable, of } from 'rxjs';
-import { BiddingProjectDetailsComponent } from './biddingProjectDetails/bidding-project-details.component';
+import { User } from '../../../models';
 // import { ListPageHeaderComponent } from 'src/app/containers/pages/list-page-header/list-page-header.component';
 
 @Component({
-  selector: 'app-bidding-project',
-  templateUrl: './bidding-project.component.html',
+  selector: 'app-user-talents',
+  templateUrl: './user-talents.component.html'
 })
-export class BiddingProjectComponent implements OnInit, AfterViewInit {
+export class UserTalentComponent implements OnInit, AfterViewInit {
   displayMode = 'list';
   selectAllState = '';
-  selected: Project[] = [];
-  selected$: Observable<Project[]> = of([]);
-  projects: Project[] = [];
-  projects$: Observable<Project[]> = of([]);
+
+  selected: User[] = [];
+  selected$: Observable<User[]> = of([]);
+  users: User[] = [];
+  users$: Observable<User[]> = of([]);
+
   currentPage = 1;
   currentPage$ = of(1);
   itemsPerPage = 10;
@@ -88,21 +90,22 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
     private notifications: NotificationsService,
     private translate: TranslateService,
     //private apiService: ApiService,
-    private projectService: ProjectService,
+    private userService:UserService,
+    //private projectService: ProjectService,
     private modalService: BsModalService
   ) {
-    this.hotkeysService.add(
-      new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
-        this.selected$ = this.projects$; // [...this.data];
-        return false;
-      })
-    );
-    this.hotkeysService.add(
-      new Hotkey('ctrl+d', (event: KeyboardEvent): boolean => {
-        this.selected = [];
-        return false;
-      })
-    );
+    // this.hotkeysService.add(
+    //   new Hotkey('ctrl+a', (event: KeyboardEvent): boolean => {
+    //     this.selected$ = this.projects$; // [...this.data];
+    //     return false;
+    //   })
+    // );
+    // this.hotkeysService.add(
+    //   new Hotkey('ctrl+d', (event: KeyboardEvent): boolean => {
+    //     this.selected = [];
+    //     return false;
+    //   })
+    // );
   }
 
   ngOnInit(): void {
@@ -136,27 +139,30 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
     this.orderBy = orderBy;
     //console.log('loading data');
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
-    this.projects$ = this.projectService
-      .getPageResult(pageSize, currentPage, search, orderBy, filterBy,this.entityType)
-      .pipe(
-        tap((d) => {
-          //console.log(d);
-          this.projects = d.data;
-          this.totalItem = d.totalItem;
-          this.totalPage = d.totalPage;
-          //console.log(this.projects);
-        }),
-        map((result) => {
-          if (result.state) {
-            // this.projects = Object.values(result.data)[1] as any;//result.data;
-            // return Object.values(result.data)[1] as any;
-
-            this.projects = result.data;//result.data;
-              //console.log(this.projects);
-              return result.data;
-          }
-        })
+    this.users$ = this.userService.getUserTalents()
+    .pipe(
+      //tap(u => console.log(u))
       );
+      // .getPageResult(pageSize, currentPage, search, orderBy, filterBy,'')
+      // .pipe(
+      //   tap((d) => {
+      //     console.log(d);
+      //     this.users = d.data;
+      //     this.totalItem = d.totalItem;
+      //     this.totalPage = d.totalPage;
+      //     console.log(this.users);
+      //   }),
+      //   map((result) => {
+      //     if (result.state) {
+      //       // this.projects = Object.values(result.data)[1] as any;//result.data;
+      //       // return Object.values(result.data)[1] as any;
+
+      //       this.users = result.data;//result.data;
+      //         console.log(this.users);
+      //         return result.data;
+      //     }
+      //   })
+      // );
     //this.projects$.subscribe();
     // this.projectService.getProjects().subscribe(pagingData => {
 
@@ -167,8 +173,8 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
 
   }
 
-  viewEntity(project: Project) {
-    //console.log(project);
+  viewEntity(project: User) {
+    console.log(project);
     this.config.initialState.project = project;
     this.config.class = 'modal-md';
     this.bsModalRef = this.modalService.show(
@@ -193,10 +199,10 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
   //     this.bsModalRef =  this.addNewModalRef.show();
   //   }
 
-  isSelected(p: Project): boolean {
+  isSelected(p: User): boolean {
     return this.selected.findIndex((x) => x.id === p.id) > -1;
   }
-  onSelect(item: Project): void {
+  onSelect(item: User): void {
     if (this.isSelected(item)) {
       this.selected = this.selected.filter((x) => x.id !== item.id);
     } else {
@@ -206,7 +212,7 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
   }
 
   setSelectAllState(): void {
-    if (this.selected.length === this.projects.length) {
+    if (this.selected.length === this.users.length) {
       this.selectAllState = 'checked';
     } else if (this.selected.length !== 0) {
       this.selectAllState = 'indeterminate';
@@ -217,7 +223,7 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
 
   selectAllChange($event): void {
     if ($event.target.checked) {
-      this.selected = [...this.projects];
+      this.selected = [...this.users];
     } else {
       this.selected = [];
     }
@@ -242,12 +248,16 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
   //   this.loadData(this.itemsPerPage, 1, val, this.orderBy, this.projectStage.value);
   // }
 
-  onContextMenuClick(action: string, item: Project): void {
+  onContextMenuClick(action: string, item: User): void {
     console.log(
       'onContextMenuClick -> action :  ',
       action,
       ', item.title :',
-      item.title
+      item.id
     );
   }
 }
+function BiddingProjectDetailsComponent(BiddingProjectDetailsComponent: any, config: { initialState: { project: any; projectMode: string; }; backdrop: boolean; ignoreBackdropClick: boolean; class: string; height: string; }): BsModalRef {
+  throw new Error('Function not implemented.');
+}
+

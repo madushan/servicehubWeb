@@ -16,4 +16,18 @@ export class BidService extends BaseService<Bid> {
   constructor(public http: HttpClient) {
     super(http, API_URL);
   }
+
+  getBidByProjectAndUser(projectId){
+    return this.http.get<Bid>(API_URL + '/getbid/'+projectId)
+      .pipe(
+        tap(console.log)
+      )
+  }
+
+  getBidsByProject(projectId){
+    return this.http.get<Bid[]>(API_URL + '/getbids/'+projectId)
+      .pipe(
+        tap(console.log)
+      )
+  }
 }

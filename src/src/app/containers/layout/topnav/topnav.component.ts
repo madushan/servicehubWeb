@@ -8,6 +8,8 @@ import { getThemeColor, setThemeColor } from 'src/app/utils/util';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ChatComponent } from 'src/app/views/app/applications/chat/chat.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { UserDetailsComponent } from 'src/app/views/user/details/user-details.component';
+import { User } from 'src/app/models';
 
 @Component({
   selector: 'app-topnav',
@@ -53,13 +55,13 @@ export class TopnavComponent implements OnInit, OnDestroy {
     this.isSingleLang = this.langService.isSingleLang;
     this.isDarkModeActive = getThemeColor().indexOf('dark') > -1 ? true : false;
     this.currentUser = this.authService.getCurretUser();
-    console.log(this.currentUser);
+    //console.log(this.currentUser);
     this.displayName = this.currentUser.Name;
     this.userId = this.currentUser.Id;
   }
 
   showChatWindow() {
-    console.log('chat window open');
+    //console.log('chat window open');
     this.bsModalRef = this.modalService.show(ChatComponent, this.config);
     //this.bsModalRef.content.project = new Project();
     this.bsModalRef.content.modalRef = this.bsModalRef;
@@ -137,8 +139,8 @@ export class TopnavComponent implements OnInit, OnDestroy {
       e.stopPropagation();
     }
 
-    console.log(menuClickCount);
-    console.log(containerClassnames);
+    // console.log(menuClickCount);
+    // console.log(containerClassnames);
 
     setTimeout(() => {
       const event = document.createEvent('HTMLEvents');
@@ -168,6 +170,46 @@ export class TopnavComponent implements OnInit, OnDestroy {
     this.router.navigate(['/']);
 
   }
+
+  profileView() {
+    // console.log(user);
+    // this.config.initialState.project = user;
+    // this.config.class = 'modal-md';
+    // this.bsModalRef = this.modalService.show(
+    //   UserDetailsComponent,
+    //   this.config
+    // );
+    // //this.bsModalRef.content.project = new Project();
+    // this.bsModalRef.content.modalRef = this.bsModalRef;
+
+    // this.bsModalRef.content.event.subscribe((res) => {
+    //   console.log(res);
+    //   this.editEntity(res);
+    // });
+  }
+
+  // editEntity(user: User) {
+  //   console.log(user);
+  //   this.config.initialState.project = user;
+  //   this.config.initialState.projectMode = 'edit';
+  //   this.bsModalRef = this.modalService.show(
+  //     UserCreateComponent,
+  //     this.config
+  //   );
+  //   //this.bsModalRef.content.project = project; //new Project();
+  //   this.bsModalRef.content.modalRef = this.bsModalRef;
+  //   this.bsModalRef.content.event.subscribe((res) => {
+  //     console.log(res);
+  //     this.userService.update(res.data).subscribe(() => {
+  //       //this.data.(res.data);
+  //       this.notifications.info(
+  //         'Edit product', // title
+  //         user.name + ' edited successfully', // content
+  //         this.notificationConfig
+  //       );
+  //     });
+  //   });
+  // }
 
   searchKeyUp(event: KeyboardEvent): void {
     if (event.key === 'Enter') {

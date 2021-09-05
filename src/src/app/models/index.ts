@@ -10,6 +10,7 @@ import { SocialMedia } from './socialMedia';
 import { UserArea } from './userArea';
 import { User } from './user';
 import { Bid } from './bid';
+import { ProjectCategory } from './projectCategory';
 
 export {
   Advertisement,
@@ -20,6 +21,7 @@ export {
   Payment,
   Portfolio,
   Project,
+  ProjectCategory,
   Skill,
   SocialMedia,
   UserArea,

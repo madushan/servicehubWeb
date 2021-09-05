@@ -42,7 +42,24 @@
             </div>
         </tab>
         <tab heading="Find Talents">
-          <!-- <app-profile-friends></app-profile-friends> -->
+          <div class="row">
+              <div class="col-12 col-lg-3 mb-4">
+                <app-talent-query></app-talent-query>
+              </div>
+              <div class="col-12 col-lg-9">
+                <app-user-talents></app-user-talents>
+                <!-- <div class="sortable-survey" [sortablejs]="[1,2,3,4]" [sortablejsOptions]="{ handle: '.drag' }">
+                  <p>Questions</p>
+                  <app-question-builder *ngFor="let item of currentSurvey.questions; let i=index" [question]="item"
+                    [sort]="i+1"></app-question-builder>
+                </div>
+                <div class="text-center">
+                  <button class="btn btn-outline-primary mt-3" (click)="addNew()"><i
+                      class="simple-icon-plus btn-group-icon"></i>
+                    {{ 'survey.add-question' | translate }}</button>
+                </div> -->
+              </div>
+            </div>
         </tab>
       </tabset>
     </div>

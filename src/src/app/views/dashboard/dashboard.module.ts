@@ -40,7 +40,10 @@ import { DashboardComponent } from './dashboard.component';
 import { BiddingProjectComponent } from './bidding/bidding-project.component';
 import { BiddingProjectDetailsComponent } from './bidding/biddingProjectDetails/bidding-project-details.component';
 import { BidQueryComponent } from './bidding/bidQuery/bid-query.component';
-import { ProjectDetailsDashComponent } from './projectDetails/project-details-dash.component';
+import { ProjectDetailsDashComponent } from './bidding/projectDetails/project-details-dash.component';
+import { ProjectBidListComponent } from './bidding/projectBidList/project-bid-list.component';
+import { UserTalentComponent } from './talents/user-talents.component';
+import { TalentQueryComponent } from './talents/talentQuery/talent-query.component';
 
 
 @NgModule({
@@ -49,7 +52,10 @@ import { ProjectDetailsDashComponent } from './projectDetails/project-details-da
     BiddingProjectComponent,
     BidQueryComponent,
     BiddingProjectDetailsComponent,
-    ProjectDetailsDashComponent
+    ProjectDetailsDashComponent,
+    ProjectBidListComponent,
+    UserTalentComponent,
+    TalentQueryComponent
   ],
   imports: [
     CommonModule,

@@ -22,7 +22,7 @@ export class BaseService<EntityType extends BaseEntity> {
     filterBy: string = '',
     entityType:string = ''
   ) {
-
+    console.log('get page results');
     let params = new HttpParams();
     params = params.append('pageSize', pageSize + '');
     params = params.append('currentPage', currentPage + '');
@@ -31,7 +31,7 @@ export class BaseService<EntityType extends BaseEntity> {
     params = params.append('filterBy', filterBy);
     params = params.append('entityType',entityType);
     console.log(params);
-    console.log(this.apiUrl + '/details');
+    //console.log(this.apiUrl + '/details');
 
     return this.http
       .get<PagingResult<EntityType>>(this.apiUrl + '/details', { params })
@@ -58,11 +58,11 @@ export class BaseService<EntityType extends BaseEntity> {
     // return this.http.get<Project[]>(this.API_URL, this.requestHeaders);
     return this.http.get<EntityType[]>(this.apiUrl)
       .pipe(
-        tap((x) => console.log(x)),
+        //tap((x) => console.log(x)),
         map((result) => {
            return Object.values(result);
           //   this.projects = Object.values(result.data)[1] as any;//result.data;
-          // console.log(this.projects);
+          // //console.log(this.projects);
           //   return Object.values(result.data)[1] as any;
 
         })
@@ -70,18 +70,18 @@ export class BaseService<EntityType extends BaseEntity> {
   }
 
   add(entity: EntityType): Observable<EntityType> {
-    console.log(entity);
-    //console.log(this.apiUrl);
+    //console.log(entity);
+    ////console.log(this.apiUrl);
     return this.http.post<EntityType>(this.apiUrl, entity);
   }
 
   update(entity: EntityType): Observable<EntityType> {
-    console.log(entity);
+    //console.log(entity);
     return this.http.put<EntityType>(`${this.apiUrl}/` + entity.id, entity);
   }
 
   delete(id: number): Observable<EntityType> {
-    console.log(id);
+    //console.log(id);
     return this.http.delete<EntityType>(`${this.apiUrl}/` + id);
   }
 

@@ -4,8 +4,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NotificationsService, NotificationType } from 'angular2-notifications';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { Project } from '../../../models/project';
-import { ProjectService } from '../../../services';
+import { User } from 'src/app/models';
+import { ApiUser } from 'src/app/models/auth/apiUser';
+import { AuthService, ProjectService, UserService } from '../../../services';
 
 @Component({
   selector: 'app-user-create',
@@ -15,28 +16,31 @@ export class UserCreateComponent implements OnInit {
   public event: EventEmitter<any> = new EventEmitter();
 
   public modalRef: BsModalRef;
-  @Input() public project: Project;
-  @Input() public projectMode: string;
+  @Input() public user:User;
+  @Input() public userMode: string;
 
   projectFormGroup: FormGroup;
 
-  project$: Observable<Project>;
+  //user$: Observable<Project>;
+  apiUser: ApiUser;
+
 
   constructor(private fb: FormBuilder,
     private notifications: NotificationsService,
-    private projectService: ProjectService) {
+    private userService: UserService,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
     this.projectFormGroup = this.createFormGroup();
-    if (this.project) {
-      this.projectFormGroup.patchValue(this.project);
+    if (this.user) {
+      this.projectFormGroup.patchValue(this.user);
     }
   }
 
   createFormGroup() {
     return this.fb.group({
-      name: '',
+      //name: '',
       address: '',
       identityPhoto: '',
       //contacts: '',
@@ -51,30 +55,63 @@ export class UserCreateComponent implements OnInit {
       hourlyRate: '',
       //agreements: '',
       //projects: ''
+
+      ////API User specific
+      userName: '',
+      password: '',
+      confirmPassword: '',
+      email: '',
+      firstName: '',
+      lastName: '',
+      phoneNumber: ''
     });
   }
 
   saveUser() {
+    if (this.projectFormGroup.value.password == this.projectFormGroup.value.confirmPassword) {
+      this.apiUser.password = this.projectFormGroup.value.password;
+    }
+    else {
+      return;
+    }
 
-    this.project.title = this.projectFormGroup.value.title;
-    this.project.description = this.projectFormGroup.value.description;
-    this.project.requiredExpertiseLevel = this.projectFormGroup.value.requiredExpertiseLevel;
-    this.project.estimatedBudget = this.projectFormGroup.value.estimatedBudget;
+    this.apiUser.email = this.projectFormGroup.value.email;
+    this.apiUser.firstName = this.projectFormGroup.value.firstName;
+    this.apiUser.lastName = this.projectFormGroup.value.lastName;
+    this.apiUser.userName = this.projectFormGroup.value.userName;
+    this.apiUser.phoneNumber = this.projectFormGroup.value.phoneNumber;
 
-    if (this.projectMode == 'add') {
-      this.projectService.add(this.project).subscribe(
+    this.apiUser.roles.push('Admin');// = ['Admin'];
+
+    this.authService.register(this.apiUser).subscribe(
+      res => { console.log(res);
+    },
+      err => console.log(err)
+    );
+
+    ////////// User
+
+    this.user.name = this.projectFormGroup.value.firstName + this.projectFormGroup.value.lastName;
+    this.user.address = this.projectFormGroup.value.address;
+    this.user.providerIntroduction = this.projectFormGroup.value.providerIntroduction;
+    this.user.expertiseLevel = this.projectFormGroup.value.expertiseLevel;
+    this.user.currentEmployment = this.projectFormGroup.value.currentEmployment;
+    this.user.hourlyRate = this.projectFormGroup.value.hourlyRate;
+
+    if (this.userMode == 'add') {
+      this.userService.add(this.user).subscribe(
         d => {
           console.log(d);
-          this.notifications.create('Successfull', this.project.title + ' added successfully', NotificationType.Success,
+          this.notifications.create('Successfull', this.user.name + ' added successfully', NotificationType.Success,
             { theClass: 'outline primary', timeOut: 6000, showProgressBar: true })
         },
         e => console.log(e)
       );
     } else {
-      this.projectService.update(this.project).subscribe(
+      this.userService.update(this.user).subscribe(
         d => {
           console.log(d);
-          this.notifications.create('Successfull', this.project.title + ' updated successfully', NotificationType.Bare,
+          this.notifications.create('Successfull', this.user.name + ' updated successfully', NotificationType.Bare,
             { theClass: 'outline primary', timeOut: 6000, showProgressBar: true })
         },
         e => console.log(e)

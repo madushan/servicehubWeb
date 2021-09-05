@@ -5,6 +5,7 @@ import * as moment from "moment";
 //import { moment } from "ngx-bootstrap/chronos/test/chain";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
+import { User } from "src/app/models";
 import { LoginUserDTO } from "src/app/models/auth/loginUserDTO";
 import { environment } from "src/environments/environment";
 import { BaseService } from "../baseService.service";
@@ -80,7 +81,7 @@ export class AuthService {
   }
 
   public login(loginDto: LoginUserDTO) {
-    console.log(loginDto);
+    //console.log(loginDto);
     //debugger;
     return this.http.post<LoginUserDTO>(API_URL + '/login', loginDto)
       .pipe(
@@ -99,12 +100,19 @@ export class AuthService {
 
     localStorage.setItem('id_token', authResult.token);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-    console.log(localStorage.getItem('id_token'));
+    //console.log(localStorage.getItem('id_token'));
   }
   public logout() {
     localStorage.removeItem('id_token');
     localStorage.removeItem("expires_at");
     this.currentUserSubject.next(null);
+  }
+
+  getUserByApiUserId(id){
+    return this.http.get<User>(API_URL + '/getuser/'+id)
+      .pipe(
+        //tap(console.log)
+      )
   }
 
   public isLoggedIn() {

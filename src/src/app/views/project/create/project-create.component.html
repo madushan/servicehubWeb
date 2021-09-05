@@ -23,15 +23,20 @@
                 <label>Description</label>
                 <textarea type="text" class="form-control" formControlName="description" name="description"></textarea>
             </div>
-            <!-- <div class="form-group">
+            <!-- <div class="col-12 col-lg-6 mb-4">
                 <label>Skills</label>
                 <input type="text" class="form-control" formControlName="requiredSkills" name="skills"/>
             </div> -->
 
-          <div class="col-12 col-lg-6 mb-4">
-            <label><span>Skills</span></label>
+          <div class="form-group">
+            <!-- <label><span>Skills</span></label>
             <ng-select formControlName="requiredSkills">
-              <ng-option *ngFor="let skill of skills$ | async" [value]="skill.id">{{skill.name}}</ng-option>
+              <ng-option *ngFor="let skill of skills$ | async" [multiple]="true" [closeOnSelect]="false" [value]="skill.id">{{skill.name}}</ng-option>
+            </ng-select> -->
+
+            <label><span>Skills</span></label>
+            <ng-select [items]="skills$ | async" [multiple]="true" bindLabel="name" [closeOnSelect]="false"
+              formControlName="requiredSkills">
             </ng-select>
           </div>
             <div class="form-group">

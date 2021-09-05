@@ -2,9 +2,10 @@ import { EventEmitter, Input, OnInit } from '@angular/core';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Observable } from 'rxjs';
 import { Bid } from 'src/app/models';
 import { BidService } from 'src/app/services';
-import { Project } from './../../../models/project';
+import { Project } from '../../../../models/project';
 // import { ProjectStatus } from './../../../data/enums';
 
 @Component({
@@ -20,6 +21,8 @@ export class ProjectDetailsDashComponent implements OnInit {
 
   //public project: Project;
   @Input() public project: Project;
+
+  bids$:Observable<Bid[]>;
 
   public event: EventEmitter<any> = new EventEmitter();
 
@@ -52,7 +55,13 @@ export class ProjectDetailsDashComponent implements OnInit {
 
   ngOnInit() {
     this.bidForm = this.createFormGroupWithFB();
+    //this.bids$ = this.bidService.getBidsByProject(this.project.id);
+    this.bidService.getBidByProjectAndUser(this.project.id).subscribe(b => {
+      console.log(b);
+      this.bid = {...b};
+      console.log(this.bid);
     this.bidForm.patchValue(this.bid);
+    });
     console.log(this.project);
     // if (this.project) {
     //   console.log(this.project);

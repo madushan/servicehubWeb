@@ -7,19 +7,15 @@ import { Observable } from 'rxjs';
 import { BaseService } from './baseService.service';
 import { Advertisement } from '../models/advertisement';
 import { Agreement } from '../models/agreement';
-import { User } from '../models';
+import { ProjectCategory } from '../models';
 
-const API_URL = environment.webApiUrl + '/users';
+const API_URL = environment.webApiUrl + '/projectCategories';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService extends BaseService<User> {
+export class ProjectCategoryService extends BaseService<ProjectCategory> {
   constructor(public http: HttpClient) {
     super(http, API_URL);
-  }
-
-  getUserTalents(): Observable<User[]>{
-    return this.http.get<User[]>(`${this.apiUrl}/talents`);
   }
 }

@@ -32,15 +32,25 @@ export class ProjectCreateComponent implements OnInit {
     private notifications: NotificationsService,
     private projectService: ProjectService) {
     this.currentUser = this.authService.getCurretUser();
+    console.log(this.project);
   }
 
   ngOnInit() {
     this.projectFormGroup = this.createFormGroup();
-    this.skills$ = this.skillService.getAll().pipe(tap(console.log),map(s => s[1]));
+    this.skills$ = this.skillService.getAll().pipe(tap(s => console.log(s)),map(s => s));
 
-    if (this.project) {
+    if (this.project?.id) {
+    console.log(this.project);
       this.projectFormGroup.patchValue(this.project);
     }
+    else{
+      this.project = new Project();
+      this.project.stage = "New";
+      this.project.status = "Initial";
+      this.project.isActive = true;
+      console.log(this.project);
+    }
+    console.log(this.project);
   }
 
   createFormGroup() {
@@ -57,15 +67,17 @@ export class ProjectCreateComponent implements OnInit {
 
   saveProject() {
 
+    console.log(this.projectFormGroup.value.requiredSkills);
+
     this.project.title = this.projectFormGroup.value.title;
     this.project.description = this.projectFormGroup.value.description;
     this.project.estimatedTimeEffort = this.projectFormGroup.value.estimatedTimeEffort;
-    this.project.requiredSkills = this.projectFormGroup.value.requiredSkills;
+    //this.project.requiredSkills = this.projectFormGroup.value.requiredSkills;
     this.project.requiredExpertiseLevel = this.projectFormGroup.value.requiredExpertiseLevel;
     this.project.estimatedBudget = this.projectFormGroup.value.estimatedBudget;
     this.project.category = this.projectFormGroup.value.category;
-    this.project.consumerId = 1;
-    this.project.isActive = true;
+
+    //this.project = {...this.projectFormGroup.value};
 
     console.log(this.project);
 

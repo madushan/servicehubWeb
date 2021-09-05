@@ -2,22 +2,27 @@ import { EventEmitter, Input, OnInit } from '@angular/core';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { ProjectService } from 'src/app/services';
-import { Project } from './../../../models/project';
+import { Observable } from 'rxjs';
+import { BidService } from './../../../../services';
+import { Project,Bid } from '../../../../models';
+import { tap } from 'rxjs/operators';
 // import { ProjectStatus } from './../../../data/enums';
 
 @Component({
-  selector: 'app-project-details',
-  templateUrl: './project-details.component.html',
+  selector: 'app-project-bid-list',
+  templateUrl: './project-bid-list.component.html',
 })
-export class ProjectDetailsComponent implements OnInit {
-  projectForm: FormGroup;
+export class ProjectBidListComponent implements OnInit {
+  bidForm: FormGroup;
   rate = 4;
-  nextAction = "Initial";
 
+  showBids:boolean = false;
+  bid:Bid;
 
   //public project: Project;
   @Input() public project: Project;
+
+  bids$:Observable<Bid[]>;
 
   public event: EventEmitter<any> = new EventEmitter();
 
@@ -41,44 +46,48 @@ export class ProjectDetailsComponent implements OnInit {
 
   @ViewChild('template', { static: true }) template: TemplateRef<any>;
 
-  constructor(private modalService: BsModalService, private fb: FormBuilder,private projectService:ProjectService) {
-
+  constructor(private modalService: BsModalService,
+    private fb: FormBuilder,
+    private bidService:BidService
+    ) {
+    this.bid = new Bid();
   }
 
   ngOnInit() {
-    // this.projectForm = this.createFormGroupWithFB();
+    this.bidForm = this.createFormGroupWithFB();
+    this.bids$ = this.bidService.getBidsByProject(this.project.id).pipe(tap(console.log));
+    // this.bidService.getBidByProjectAndUser(this.project.id).subscribe(b => {
+    //   console.log(b);
+    //   this.bid = {...b};
+    //   console.log(this.bid);
+    // this.bidForm.patchValue(this.bid);
+    // });
     console.log(this.project);
-    this.getNextAction(this.project.status);
     // if (this.project) {
     //   console.log(this.project);
-    //   this.projectForm.patchValue(this.project);
+    //   this.bidForm.patchValue(this.project);
     // }
   }
 
-  getNextAction(currentStatus:string){
-    if(currentStatus=="Initial"){
-      this.nextAction = "Publish for Bidding";
-    }
-    else if(currentStatus == "Bidding"){
-      this.nextAction = "Close Bidding";
-    }
-  }
-
-  changeStatus(){
-    let nextStatus = "";
-    if(this.nextAction=="Publish for Bidding"){
-      nextStatus = "Bidding";
-    }
-    this.projectService.changeStatus(this.project.id,nextStatus)
-    .subscribe(res => {
-      console.log(res);
-      this.modalRef.hide();
-    });
+  saveBid(){
+    console.log(this.bid);
+    console.log(this.bidForm.value);
+    this.bid.id = 0;
+    this.bid.description = this.bidForm.value.description;
+    this.bid.amount = this.bidForm.value.amount;
+    this.bid.requiredTime = this.bidForm.value.requiredTime;
+    this.bid.projectId = this.project.id;
+    this.bid.providerId = 3;
+    this.bidService.add(this.bid).subscribe(console.log);
   }
 
   edit() {
     this.event.emit(this.project);
     this.modalRef.hide();
+  }
+
+  showBidding(){
+    this.showBids = !this.showBids;
   }
 
   //   createFormGroup() {
@@ -89,14 +98,13 @@ export class ProjectDetailsComponent implements OnInit {
   //     });
   //   }
 
-  //   createFormGroupWithFB() {
-  //     return (this.projectForm = this.fb.group({
-  //       id: '0',
-  //       title: '',
-  //       category: '',
-  //       description: '',
-  //     }));
-  //   }
+    createFormGroupWithFB() {
+      return (this.bidForm = this.fb.group({
+        description: '',
+        amount: 0,
+        requiredTime:0
+      }));
+    }
 
   //   saveToList(form) {
   //     console.log(form);
