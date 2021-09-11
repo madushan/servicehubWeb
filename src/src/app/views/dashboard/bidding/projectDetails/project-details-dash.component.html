@@ -89,8 +89,8 @@
     </div>
 
 
-    <div class="card mb-4" *ngIf="showBids">
-      <div class="card-body">
+    <div class="card mb-4" id="bid-section">
+      <div class="card-body" *ngIf="showBids">
         <h5 class="card-title">Bid Proposal</h5>
 
         <form [formGroup]="bidForm" (ngSubmit)="saveBid()">

@@ -46,20 +46,21 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
   projectStages = [
     { label: 'Bidding', value: 'bidding' },
     { label: 'Current Projects', value: 'current' },
-    { label: 'Finished Projects', value: 'finished' }];
+    { label: 'Finished Projects', value: 'finished' },
+  ];
 
-  projectStage = "New";
-  entityType = 'bidding';//filter in backend services
+  projectStage = 'New';
+  entityType = 'bidding'; //filter in backend services
 
   config = {
     initialState: {
       project: null,
-      projectMode: 'add'
+      projectMode: 'add',
     },
     backdrop: true,
     ignoreBackdropClick: true,
     class: 'modal-lg',
-    height: '100%'
+    height: '100%',
     //class: 'modal-right'
   };
 
@@ -137,7 +138,14 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
     //console.log('loading data');
     // this.apiService.getProducts(pageSize, currentPage, search, orderBy).subscribe(
     this.projects$ = this.projectService
-      .getPageResult(pageSize, currentPage, search, orderBy, filterBy,this.entityType)
+      .getPageResult(
+        pageSize,
+        currentPage,
+        search,
+        orderBy,
+        filterBy,
+        this.entityType
+      )
       .pipe(
         tap((d) => {
           //console.log(d);
@@ -151,9 +159,9 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
             // this.projects = Object.values(result.data)[1] as any;//result.data;
             // return Object.values(result.data)[1] as any;
 
-            this.projects = result.data;//result.data;
-              //console.log(this.projects);
-              return result.data;
+            this.projects = result.data; //result.data;
+            //console.log(this.projects);
+            return result.data;
           }
         })
       );
@@ -163,9 +171,7 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
     // })
   }
 
-  addEntity() {
-
-  }
+  addEntity() {}
 
   viewEntity(project: Project) {
     //console.log(project);
@@ -183,7 +189,6 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
       //this.editEntity(res);
     });
   }
-
 
   changeDisplayMode(mode): void {
     this.displayMode = mode;
@@ -225,7 +230,13 @@ export class BiddingProjectComponent implements OnInit, AfterViewInit {
   }
 
   pageChanged(event: any): void {
-    this.loadData(this.itemsPerPage, event.page, this.search, this.orderBy, this.projectStage);
+    this.loadData(
+      this.itemsPerPage,
+      event.page,
+      this.search,
+      this.orderBy,
+      this.projectStage
+    );
   }
 
   // itemsPerPageChange(perPage: number): void {

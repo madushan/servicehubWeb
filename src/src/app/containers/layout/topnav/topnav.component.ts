@@ -56,8 +56,8 @@ export class TopnavComponent implements OnInit, OnDestroy {
     this.isDarkModeActive = getThemeColor().indexOf('dark') > -1 ? true : false;
     this.currentUser = this.authService.getCurretUser();
     //console.log(this.currentUser);
-    this.displayName = this.currentUser.Name;
-    this.userId = this.currentUser.Id;
+    this.displayName = this.currentUser?.Name;
+    this.userId = this.currentUser?.Id;
   }
 
   showChatWindow() {
@@ -127,7 +127,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 
   menuButtonClick = (
@@ -166,26 +166,23 @@ export class TopnavComponent implements OnInit, OnDestroy {
   };
 
   onSignOut(): void {
-    this.authService.logout();
-    this.router.navigate(['/']);
-
+    this.authService.logout().subscribe((res) => {
+      console.log(res);
+      this.router.navigate(['/']);
+    });
   }
 
   profileView() {
-    // console.log(user);
-    // this.config.initialState.project = user;
-    // this.config.class = 'modal-md';
-    // this.bsModalRef = this.modalService.show(
-    //   UserDetailsComponent,
-    //   this.config
-    // );
-    // //this.bsModalRef.content.project = new Project();
-    // this.bsModalRef.content.modalRef = this.bsModalRef;
-
-    // this.bsModalRef.content.event.subscribe((res) => {
-    //   console.log(res);
-    //   this.editEntity(res);
-    // });
+    console.log(this.currentUser);
+    this.config.initialState.project = this.currentUser;
+    this.config.class = 'modal-md';
+    this.bsModalRef = this.modalService.show(UserDetailsComponent, this.config);
+    //this.bsModalRef.content.project = new Project();
+    this.bsModalRef.content.modalRef = this.bsModalRef;
+    this.bsModalRef.content.event.subscribe((res) => {
+      console.log(res);
+      //this.editEntity(res);
+    });
   }
 
   // editEntity(user: User) {

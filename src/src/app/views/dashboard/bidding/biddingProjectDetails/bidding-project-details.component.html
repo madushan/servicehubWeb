@@ -13,7 +13,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div> -->
-  <div class="modal-body">
+  <div class="modal-body" style="min-height: 650px;">
     <!-- <div class="card mb-4"> -->
       <div class="position-absolute card-top-buttons" style="margin-right: -0px;margin-top: -0px;">
         <button
@@ -28,14 +28,16 @@
           <i class="simple-icon-pencil"></i>
         </button> -->
       </div>
-      <tabset class="separator-tabs">
+      <tabset class="separator-tabs" style="min-height: 700px;">
         <tab heading="Project">
           <div class="row">
             <app-project-dash-details [project]="project"></app-project-dash-details>
           </div>
         </tab>
         <tab heading="Bids">
-          <app-project-bid-list [project]="project"></app-project-bid-list>
+          <div class="row">
+            <app-project-bid-list [project]="project"></app-project-bid-list>
+          </div>
         </tab>
       </tabset>
       <!-- <img src="/assets/img/details/1.jpg" alt="Detail" class="card-img-top" />

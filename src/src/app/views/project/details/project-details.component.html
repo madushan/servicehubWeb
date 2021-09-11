@@ -83,6 +83,17 @@
         <p class="text-muted text-small mb-2">
          Project Status
         </p>
+
+
+        <div class="form-group mb-3">
+          <label>{{ 'form-components.locale' | translate }}</label>
+          <input class="form-control" [(ngModel)]="biddingCloseDate" placeholder="Datepicker" bsDatepicker >
+        </div>
+
+        <!-- <div class="form-group">
+            <label>Bid Close Date</label>
+            <input type="text"  [container]="'html'" [(ngModel)]="biddingCloseDate" class="form-control" name="title"/>
+        </div> -->
         <p class="mb-3">{{project.status}}</p>
           <div>
             <div>

@@ -5,6 +5,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ProjectService } from 'src/app/services';
 import { Project } from './../../../models/project';
 // import { ProjectStatus } from './../../../data/enums';
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { esLocale } from 'ngx-bootstrap/locale';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-project-details',
@@ -13,8 +16,8 @@ import { Project } from './../../../models/project';
 export class ProjectDetailsComponent implements OnInit {
   projectForm: FormGroup;
   rate = 4;
-  nextAction = "Initial";
-
+  nextAction = 'Initial';
+  biddingCloseDate = '';
 
   //public project: Project;
   @Input() public project: Project;
@@ -41,9 +44,11 @@ export class ProjectDetailsComponent implements OnInit {
 
   @ViewChild('template', { static: true }) template: TemplateRef<any>;
 
-  constructor(private modalService: BsModalService, private fb: FormBuilder,private projectService:ProjectService) {
-
-  }
+  constructor(
+    private modalService: BsModalService,
+    private fb: FormBuilder,
+    private projectService: ProjectService
+  ) {}
 
   ngOnInit() {
     // this.projectForm = this.createFormGroupWithFB();
@@ -55,25 +60,29 @@ export class ProjectDetailsComponent implements OnInit {
     // }
   }
 
-  getNextAction(currentStatus:string){
-    if(currentStatus=="Initial"){
-      this.nextAction = "Publish for Bidding";
-    }
-    else if(currentStatus == "Bidding"){
-      this.nextAction = "Close Bidding";
+  getNextAction(currentStatus: string) {
+    if (currentStatus == 'Initial') {
+      this.nextAction = 'Publish for Bidding';
+    } else if (currentStatus == 'Bidding') {
+      this.nextAction = 'Close Bidding';
     }
   }
 
-  changeStatus(){
-    let nextStatus = "";
-    if(this.nextAction=="Publish for Bidding"){
-      nextStatus = "Bidding";
+  changeStatus() {
+    let nextStatus = '';
+    if (this.nextAction == 'Publish for Bidding') {
+      nextStatus = 'Bidding';
     }
-    this.projectService.changeStatus(this.project.id,nextStatus)
-    .subscribe(res => {
-      console.log(res);
-      this.modalRef.hide();
-    });
+    this.projectService
+      .changeStatus(
+        this.project.id,
+        nextStatus,
+        new Date(this.biddingCloseDate)
+      )
+      .subscribe((res) => {
+        console.log(res);
+        this.modalRef.hide();
+      });
   }
 
   edit() {

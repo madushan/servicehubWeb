@@ -18,14 +18,12 @@ export class ProjectService extends BaseService<Project> {
     super(http, API_URL);
   }
 
-  changeStatus(id,status){
+  changeStatus(id, status, statusChngeDate) {
     // let change = new StateChangeDTO();
     // let obj = {id,status};
     console.log(API_URL + '/changestatus');
-    return this.http.post(API_URL + '/changestatus',{id,status})
-          .pipe(
-            tap(console.log)
-          )
+    return this.http
+      .post(API_URL + '/changestatus', { id, status, statusChngeDate })
+      .pipe(tap(console.log));
   }
-
 }

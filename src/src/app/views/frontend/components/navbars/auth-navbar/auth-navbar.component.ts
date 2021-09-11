@@ -1,13 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { UserRegisterComponent } from "src/app/views/user/apiUser/register/user-register.component";
-import { LoginComponent } from "src/app/views/user/apiUser/login/login.component";
-import { AuthService } from "src/app/services";
-import { BehaviorSubject, Observable, of } from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { UserRegisterComponent } from 'src/app/views/user/apiUser/register/user-register.component';
+import { LoginComponent } from 'src/app/views/user/apiUser/login/login.component';
+import { AuthService } from 'src/app/services';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { UserDetailsComponent } from 'src/app/views/user/details/user-details.component';
 
 @Component({
-  selector: "app-auth-navbar",
-  templateUrl: "./auth-navbar.component.html",
+  selector: 'app-auth-navbar',
+  templateUrl: './auth-navbar.component.html',
 })
 export class AuthNavbarComponent implements OnInit {
   navbarOpen = false;
@@ -15,11 +17,10 @@ export class AuthNavbarComponent implements OnInit {
 
   bsModalRef: BsModalRef;
 
-
   config = {
     initialState: {
       project: null,
-      projectMode: 'add'
+      projectMode: 'add',
     },
     backdrop: true,
     ignoreBackdropClick: false,
@@ -27,8 +28,11 @@ export class AuthNavbarComponent implements OnInit {
     //class: 'modal-right'
   };
 
-  constructor(private modalService: BsModalService,
-    private authService: AuthService) { }
+  constructor(
+    private modalService: BsModalService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.isLogedIn$.next(this.authService.isLoggedIn());
@@ -39,34 +43,51 @@ export class AuthNavbarComponent implements OnInit {
   }
 
   signUp() {
+    if (this.authService.isLoggedIn()) {
+      console.log('logedin');
+      this.router.navigate(['/views/dashboard/dashboard']);
+    } else {
+      console.log('signUp');
+      this.config.initialState.project = null;
+      this.config.class = 'modal-md';
+      this.bsModalRef = this.modalService.show(
+        UserRegisterComponent,
+        this.config
+      );
+      //this.bsModalRef.content.project = new Project();
+      this.bsModalRef.content.modalRef = this.bsModalRef;
 
-
-    console.log('signUp');
-    this.config.initialState.project = null;
-    this.config.class = 'modal-md';
-    this.bsModalRef = this.modalService.show(
-      UserRegisterComponent,
-      this.config
-    );
-    //this.bsModalRef.content.project = new Project();
-    this.bsModalRef.content.modalRef = this.bsModalRef;
-
-    this.bsModalRef.content.event.subscribe((res) => {
-      console.log(res);
-      //this.editEntity(res);
-    });
-
+      this.bsModalRef.content.event.subscribe((res) => {
+        console.log(res);
+        //this.editEntity(res);
+      });
+    }
   }
   login() {
+    console.log(this.authService.isLoggedIn());
+    if (this.authService.isLoggedIn()) {
+      console.log('logedin');
+      this.router.navigate(['/views/dashboard/dashboard']);
+    } else {
+      console.log('not logged in');
+      this.config.initialState.project = null;
+      this.config.class = 'modal-md';
+      this.bsModalRef = this.modalService.show(LoginComponent, this.config);
+      //this.bsModalRef.content.project = new Project();
+      this.bsModalRef.content.modalRef = this.bsModalRef;
 
+      this.bsModalRef.content.event.subscribe((res) => {
+        console.log(res);
+        //this.editEntity(res);
+      });
+    }
+  }
 
-    console.log('login');
+  showProfile() {
+    //UserDetailsComponent
     this.config.initialState.project = null;
     this.config.class = 'modal-md';
-    this.bsModalRef = this.modalService.show(
-      LoginComponent,
-      this.config
-    );
+    this.bsModalRef = this.modalService.show(UserDetailsComponent, this.config);
     //this.bsModalRef.content.project = new Project();
     this.bsModalRef.content.modalRef = this.bsModalRef;
 
@@ -74,6 +95,5 @@ export class AuthNavbarComponent implements OnInit {
       console.log(res);
       //this.editEntity(res);
     });
-
   }
 }
